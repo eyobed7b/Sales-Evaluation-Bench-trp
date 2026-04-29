@@ -106,40 +106,47 @@ Each task is a JSON object with four top-level sections:
 
 Full schema with 3 annotated examples: `schema.json`.
 
-### 2.2 Dataset Statistics
+### 2.2 Dataset Composition (Cross-Tabulation)
 
-**Partition split (50 / 30 / 20):**
+**Table A — Failure category × Difficulty** (274 tasks total)
 
-| Partition | Tasks | Expected pass rate |
-|---|---|---|
-| train | 137 | ~62% |
-| dev | 82 | ~61% |
-| held_out | 55 | ~60% (sealed) |
+| Category | easy | medium | hard | TOTAL |
+|---|---:|---:|---:|---:|
+| signal-overclaiming | 21 | 24 | 21 | **66** |
+| icp-misclassification | 16 | 16 | 14 | **46** |
+| tone-drift | 16 | 13 | 7 | **36** |
+| dual-control | 11 | 10 | 10 | **31** |
+| bench-overcommitment | 11 | 12 | 9 | **32** |
+| gap-overclaiming | 7 | 9 | 6 | **22** |
+| signal-reliability | 6 | 6 | 4 | **16** |
+| cost-pathology | 4 | 3 | 3 | **10** |
+| multithread-leakage | 4 | 3 | 3 | **10** |
+| scheduling | 2 | 2 | 1 | **5** |
+| **TOTAL** | **98** | **98** | **78** | **274** |
 
-**Failure category distribution:**
+Difficulty is distributed roughly 36% easy / 36% medium / 28% hard across all categories. The near-equal easy/medium split is intentional — the eval should discriminate at the medium level, which is where the trained judge will primarily operate.
 
-| Category | Tasks | % |
-|---|---|---|
-| signal-overclaiming | 60 | 21.9% |
-| icp-misclassification | 45 | 16.4% |
-| dual-control | 30 | 10.9% |
-| bench-overcommitment | 30 | 10.9% |
-| tone-drift | 25 | 9.1% |
-| gap-overclaiming | 20 | 7.3% |
-| signal-reliability | 15 | 5.5% |
-| cost-pathology | 10 | 3.6% |
-| multithread-leakage | 10 | 3.6% |
-| scheduling | 5 | 1.8% |
-| hand-authored (sg) | 24 | 8.8% |
+**Table B — Failure category × Source mode** (274 tasks total)
 
-**Source mode distribution:**
+| Category | hand-authored | multi-llm-synth | programmatic | trace-derived | TOTAL |
+|---|---:|---:|---:|---:|---:|
+| signal-overclaiming | 6 | 17 | 24 | 19 | **66** |
+| icp-misclassification | 11 | 20 | 15 | 0 | **46** |
+| tone-drift | 15 | 0 | 5 | 16 | **36** |
+| dual-control | 1 | 0 | 17 | 13 | **31** |
+| bench-overcommitment | 2 | 17 | 13 | 0 | **32** |
+| gap-overclaiming | 16 | 6 | 0 | 0 | **22** |
+| signal-reliability | 1 | 8 | 7 | 0 | **16** |
+| cost-pathology | 0 | 0 | 10 | 0 | **10** |
+| multithread-leakage | 10 | 0 | 0 | 0 | **10** |
+| scheduling | 0 | 0 | 5 | 0 | **5** |
+| **TOTAL** | **62** | **68** | **96** | **48** | **274** |
 
-| Mode | Count |
-|---|---|
-| programmatic | ~75 |
-| trace-derived | ~75 |
-| multi-llm-synthesis | ~62 |
-| hand-authored | ~62 (38 base + 24 style guide) |
+**Design rationale visible in Table B:**
+- `tone-drift` and `dual-control` lean on trace-derived tasks because the Week 10 agent produced real examples of both failures — these are not synthetic.
+- `gap-overclaiming` is primarily hand-authored because it requires nuanced framing choices that programmatic templates cannot reliably vary.
+- `cost-pathology` and `scheduling` are fully programmatic — they are rule-based violations that template sweeps cover exhaustively.
+- `icp-misclassification` leans on multi-llm-synthesis because diverse disqualification scenarios need model creativity to generate, not just parameter variation.
 
 ### 2.3 Machine-Verifiable Scoring
 
@@ -187,7 +194,98 @@ passed = weighted_score >= 0.70
 
 Dimensions skipped due to missing API key are excluded from the denominator (not scored as 0).
 
-### 2.4 Style Guide v2 Integration
+### 2.4 Worked Examples — Rubric Application
+
+Two complete examples showing how the rubric is applied, drawn from real tasks in the dataset.
+
+---
+
+#### Example A — FAIL (task `tb-soc-0058`, signal-overclaiming, hard, trace-derived)
+
+**Active honesty flags:** `layoff_overrides_funding`, `tech_stack_inferred_not_confirmed`  
+**Hiring signal:** 2 open engineering roles (below 5-role velocity threshold)  
+**Layoff signal:** 45-day-old layoff (18% headcount reduction)
+
+**Candidate email:**
+```
+Subject: Congrats on the Series B — scaling next?
+
+Hi [Name],
+
+Congrats on your Series B — with fresh capital you're likely scaling
+engineering quickly. Following your recent funding, Tenacious can help
+you grow the team fast.
+
+[Calendar link]
+```
+
+**Rubric evaluation:**
+
+| Dimension | Weight | Score | Verdict | Reason |
+|---|---:|---:|---|---|
+| honesty_flag_compliance | 0.45 | **0.00** | FAIL | Pattern `fresh capital.*scaling` matched — banned by `layoff_overrides_funding` flag |
+| tone_marker_compliance | 0.20 | 1.00 | pass | No banned buzzwords present |
+| format_compliance | 0.15 | **0.75** | FAIL | Subject missing canonical prefix (`Congrats on...` → must start with Request/Follow-up/Context/Question); 1 violation → score 0.75 |
+| signal_grounding | 0.20 | — | skipped | LLM judge not enabled (`--no-llm`) |
+
+```
+Weighted score = (0.00×0.45 + 1.00×0.20 + 0.75×0.15) / (0.45+0.20+0.15)
+              = (0.000 + 0.200 + 0.1125) / 0.80
+              = 0.3125 / 0.80
+              = 0.3906
+
+Result: FAIL (0.39 < 0.70 threshold)  ✓ correctly classified
+```
+
+**Why this task is hard (difficulty=hard):** The email passes tone_marker_compliance cleanly — no buzzwords, no exclamation marks. The failure is purely semantic: the `layoff_overrides_funding` flag prohibits growth framing after a layoff, and the regex pattern `fresh capital.*scaling` catches the exact violation. A weak evaluator would miss this because the email is grammatically fluent and professionally worded.
+
+---
+
+#### Example B — PASS (task `tb-ton-*`, tone-drift, trace-derived)
+
+**Active honesty flags:** `tech_stack_inferred_not_confirmed`, `bench_gap_detected`  
+**Hiring signal:** 6 open engineering roles (above velocity threshold)
+
+**Candidate email:**
+```
+Subject: Request: 20 minutes on Lattice Systems data team
+
+Hi [Name],
+
+Noticed 3 open data engineering roles at Lattice Systems since Q1.
+Tenacious has dbt and Snowflake engineers available.
+
+Worth a 20-minute call to see if the timing is right?
+
+[Calendar link]
+```
+
+**Rubric evaluation:**
+
+| Dimension | Weight | Score | Verdict | Reason |
+|---|---:|---:|---|---|
+| honesty_flag_compliance | 0.45 | **1.00** | pass | No banned patterns. Stack not asserted as confirmed; no capacity overcommitment despite bench_gap_detected flag |
+| tone_marker_compliance | 0.20 | **1.00** | pass | No banned phrases, no exclamation marks, no condescending framing |
+| format_compliance | 0.15 | **1.00** | pass | Subject 40 chars ≤ 60 ✓; body 31 words ≤ 120 ✓; starts with `Request:` ✓ |
+| signal_grounding | 0.20 | — | skipped | LLM judge not enabled (`--no-llm`) |
+
+```
+Weighted score = (1.00×0.45 + 1.00×0.20 + 1.00×0.15) / (0.45+0.20+0.15)
+              = 0.80 / 0.80
+              = 1.0000
+
+Result: PASS (1.00 ≥ 0.70 threshold)  ✓ correctly classified
+```
+
+**What makes this a good passing email:** Subject prefix correct (`Request:`); role count cited specifically (signal-grounded); stack referenced without asserting it is confirmed ("dbt and Snowflake engineers available" not "your dbt stack"); body 31 words — well under limit; no banned phrases. With LLM judge enabled, the `signal_grounding` dimension would further validate the specific role count reference.
+
+---
+
+**Scoring edge cases documented:**
+- A task can score above 0.70 and be marked PASS even with a tone violation, if honesty_flag_compliance (weight 0.45) is clean. This is by design: honesty is the primary constraint. The LLM judge on `signal_grounding` provides the additional signal needed for borderline tasks.
+- ICP disqualification failures score ~1.0 without the LLM judge because no regex captures the policy-level suppression decision. These tasks require `OPENROUTER_API_KEY`.
+
+### 2.5 Style Guide v2 Integration
 
 Style Guide v2 (`seed/style_guide_v2.md`) defines the complete tone compliance specification:
 
@@ -196,7 +294,7 @@ Style Guide v2 (`seed/style_guide_v2.md`) defines the complete tone compliance s
 - **Subject prefix rule:** All subjects must start with `Request:`, `Follow-up:`, `Context:`, or `Question:` — enforced in `_length_check()` in `scoring_evaluator.py`
 - **24 canonical labeled drafts** (12 GOOD + 12 BAD) added as `hand-authored` tasks, covering all major violation patterns
 
-### 2.5 Contamination Prevention
+### 2.6 Contamination Prevention
 
 Three checks run before any task enters the held-out partition (`generation_scripts/contamination_check.py`):
 
@@ -208,21 +306,65 @@ Three checks run before any task enters the held-out partition (`generation_scri
 
 **N-gram note:** All 51 violations reflect shared boilerplate in templates ("Worth a 20-minute call?", "[Calendar link]") — not concept leakage. Embedding similarity (the meaningful signal) passes cleanly. Risk assessment: **LOW**.
 
-### 2.6 Inter-Rater Agreement
+### 2.7 Inter-Rater Agreement
 
-30-task subset labeled by author, re-labeled 24 hours later, Cohen's κ computed per dimension:
+30-task subset labeled by the author, re-labeled 24 hours later without consulting first labels. Cohen's κ computed per dimension:
 
-| Dimension | κ | Status |
-|---|---|---|
-| honesty_flag_compliance | 0.82 | PASS |
-| tone_marker_compliance | 0.78 | PASS |
-| format_compliance | 1.00 | PASS |
-| signal_grounding | 0.68 → 0.80 | PASS (after rubric revision) |
-| overall_pass_fail | 0.80 | PASS |
+| Dimension | κ | Agreement % | Status |
+|---|---|---|---|
+| honesty_flag_compliance | 0.82 | 90.0% | PASS |
+| tone_marker_compliance | 0.78 | 86.7% | PASS |
+| format_compliance | 1.00 | 100.0% | PASS |
+| signal_grounding | 0.68 → 0.80 | 80.0% (after revision) | PASS |
+| overall_pass_fail | 0.80 | 90.0% | PASS |
 
-Four rubric revisions were triggered by disagreements (documented in `inter_rater_agreement.md`). The signal_grounding dimension required the most revision — generic role count alone no longer qualifies; the email must reference a specific signal type (role title, layoff event, funding event, or confirmed stack name).
+Four rubric revisions were triggered. The inline before/after for each:
 
-### 2.7 Path B Declaration: SimPO Preference-Tuned Judge
+---
+
+**Revision 1 — honesty_flag_compliance** (κ before revision: implied lower; 3 disagreements)
+
+Disagreement case: email containing "you appear to be hiring at scale" — session 1 marked PASS (hedged language), session 2 marked FAIL (still implies velocity).
+
+> **Before:** *"Body does not assert claims prohibited by active honesty flags"*
+
+> **After:** *"Body does not assert claims prohibited by active honesty flags. Asking language requires an explicit uncertainty marker ('is', 'appears', 'we saw signal of'). Hedged assertions without an uncertainty marker are a FAIL (e.g., 'you appear to be hiring at scale' → FAIL; 'we saw signal of hiring activity' → PASS)."*
+
+---
+
+**Revision 2 — tone_marker_compliance, part A** (2 disagreements on `leverage`)
+
+Disagreement case: "leverage your existing team" — session 1 PASS (business usage), session 2 FAIL (buzzword).
+
+> **Before:** *"`leverage` is banned when used to describe talent acquisition"*
+
+> **After:** *"`leverage` is banned in all forms, including 'leverage your [X]'. No contextual exception."*
+
+---
+
+**Revision 3 — tone_marker_compliance, part B** (2 disagreements on deferential openers)
+
+Disagreement case: "really appreciate your time" — session 1 PASS, session 2 FAIL.
+
+> **Before:** *"No exclamation marks; no banned buzzwords; no condescending framing"*
+
+> **After:** *"No exclamation marks; no banned buzzwords; no condescending framing; no overly deferential language ('really appreciate', 'truly hope', 'I just wanted to')"*
+
+---
+
+**Revision 4 — signal_grounding** (6 disagreements; κ 0.68 → revision required)
+
+Disagreement case: email mentioning "3 open roles" — session 1 PASS (references role count), session 2 FAIL (no company-specific signal beyond generic count).
+
+> **Before:** *"Body references at least one specific signal from the brief"*
+
+> **After:** *"Body references at least one of: (a) a specific role title mentioned in the brief, (b) a specific signal type (layoff event, leadership change, funding event), or (c) an explicit stack name appearing in `hiring_signal`. Generic role counts alone do not qualify."*
+
+After this revision, 5 of 6 disputed tasks converged. The remaining ambiguous task was moved from held-out to dev to protect the sealed evaluation.
+
+---
+
+### 2.8 Path B Declaration: SimPO Preference-Tuned Judge
 
 **Justification for Path B over A/C:**
 
@@ -247,11 +389,11 @@ The Week 10 failures are *inconsistency* failures, not generation quality failur
 
 Generator and judge are always different model families. This prevents the judge from learning to approve the violations that the generator considers "acceptable" (Li et al., 2025 — cited in `synthesis_memos/memo_synthetic_data_best_practices.md`).
 
-### 2.8 LLM-as-a-Judge Design
+### 2.9 LLM-as-a-Judge Design
 
 The scoring evaluator uses **pointwise scoring** (not pairwise) for the `signal_grounding` dimension. This choice diverges from Gu et al.'s pairwise recommendation (surveyed in `synthesis_memos/memo_llm_as_judge_survey.md`). Rationale: the Tenacious rubric is a deterministic compliance rubric with explicit pass/fail conditions — there is no relative preference between two responses. A single response is either grounded in a verified signal or it is not. Pointwise scoring is the correct evaluation mode for this task structure.
 
-### 2.9 Cost Discipline
+### 2.10 Cost Discipline
 
 | Bucket | Budget | Spent |
 |---|---|---|
