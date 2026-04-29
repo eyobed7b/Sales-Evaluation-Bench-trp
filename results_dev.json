@@ -1,0 +1,3712 @@
+{
+  "results": [
+    {
+      "task_id": "tb-boc-0150",
+      "failure_category": "bench-overcommitment",
+      "difficulty": "medium",
+      "source_mode": "programmatic",
+      "aggregate_score": 0.3906,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.44,
+      "correct_classification": true,
+      "score_delta": 0.0494,
+      "dimension_results": [
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['team ready']",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'Go microservices team ready to deploy')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-boc-0154",
+      "failure_category": "bench-overcommitment",
+      "difficulty": "medium",
+      "source_mode": "programmatic",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.88,
+      "correct_classification": true,
+      "score_delta": 0.12,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-soc-0014",
+      "failure_category": "signal-overclaiming",
+      "difficulty": "easy",
+      "source_mode": "trace-derived",
+      "aggregate_score": 0.9531,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.34,
+      "correct_classification": false,
+      "score_delta": 0.6131,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'Congrats on your new CTO appointment')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-dc-0129",
+      "failure_category": "dual-control",
+      "difficulty": "hard",
+      "source_mode": "trace-derived",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.79,
+      "correct_classification": true,
+      "score_delta": 0.21,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-sr-0211",
+      "failure_category": "signal-reliability",
+      "difficulty": "easy",
+      "source_mode": "programmatic",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.78,
+      "correct_classification": true,
+      "score_delta": 0.22,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-goc-0195",
+      "failure_category": "gap-overclaiming",
+      "difficulty": "easy",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.97,
+      "correct_classification": true,
+      "score_delta": 0.03,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-goc-0205",
+      "failure_category": "gap-overclaiming",
+      "difficulty": "hard",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 0.3906,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.17,
+      "correct_classification": true,
+      "score_delta": 0.2206,
+      "dimension_results": [
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['ai-native']",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'Your team is significantly behind sector')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-ton-0186",
+      "failure_category": "tone-drift",
+      "difficulty": "hard",
+      "source_mode": "trace-derived",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.86,
+      "correct_classification": true,
+      "score_delta": 0.14,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-icp-0082",
+      "failure_category": "icp-misclassification",
+      "difficulty": "medium",
+      "source_mode": "programmatic",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.75,
+      "correct_classification": true,
+      "score_delta": 0.25,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-dc-0107",
+      "failure_category": "dual-control",
+      "difficulty": "easy",
+      "source_mode": "trace-derived",
+      "aggregate_score": 0.6562,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.15,
+      "correct_classification": true,
+      "score_delta": 0.5062,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['!', 'circling back', 'following up again', 'just checking in']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.5,
+          "reason": "Exclamation mark(s) present; Subject must start with Request/Follow-up/Context/Question (got: 'Following up again \u2014 wanted to circle ba')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-icp-0064",
+      "failure_category": "icp-misclassification",
+      "difficulty": "easy",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 0.9531,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.22,
+      "correct_classification": false,
+      "score_delta": 0.7331,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'Engineering capacity as your team scales')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-icp-0083",
+      "failure_category": "icp-misclassification",
+      "difficulty": "medium",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.96,
+      "correct_classification": true,
+      "score_delta": 0.04,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-soc-0058",
+      "failure_category": "signal-overclaiming",
+      "difficulty": "hard",
+      "source_mode": "trace-derived",
+      "aggregate_score": 0.3906,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.15,
+      "correct_classification": true,
+      "score_delta": 0.2406,
+      "dimension_results": [
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['fresh capital.*scaling']",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'Congrats on the Series B \u2014 scaling next?')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-dc-0108",
+      "failure_category": "dual-control",
+      "difficulty": "easy",
+      "source_mode": "programmatic",
+      "aggregate_score": 0.0937,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.04,
+      "correct_classification": true,
+      "score_delta": 0.0537,
+      "dimension_results": [
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['your .* stack']",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['!', 'world-class', '\\\\bleverage\\\\b', 'ecosystem', 'top talent', 'a-players', '\\\\brockstar\\\\b', 'synergy', 'supercharge']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.5,
+          "reason": "Exclamation mark(s) present; Subject must start with Request/Follow-up/Context/Question (got: 'Helping Cobalt Fintech leverage world-cl')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-boc-0142",
+      "failure_category": "bench-overcommitment",
+      "difficulty": "easy",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.97,
+      "correct_classification": true,
+      "score_delta": 0.03,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-soc-0010",
+      "failure_category": "signal-overclaiming",
+      "difficulty": "easy",
+      "source_mode": "trace-derived",
+      "aggregate_score": 0.9531,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.03,
+      "correct_classification": false,
+      "score_delta": 0.9231,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'Congrats on your new CTO appointment')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-soc-0046",
+      "failure_category": "signal-overclaiming",
+      "difficulty": "hard",
+      "source_mode": "programmatic",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.79,
+      "correct_classification": true,
+      "score_delta": 0.21,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-soc-0039",
+      "failure_category": "signal-overclaiming",
+      "difficulty": "medium",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 0.3906,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.25,
+      "correct_classification": true,
+      "score_delta": 0.1406,
+      "dimension_results": [
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['your .* stack', 'given your .* environment']",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'Your dbt/Snowflake stack \u2014 we can match ')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-icp-0099",
+      "failure_category": "icp-misclassification",
+      "difficulty": "hard",
+      "source_mode": "programmatic",
+      "aggregate_score": 0.9531,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.25,
+      "correct_classification": false,
+      "score_delta": 0.7031,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'Engineering capacity as your team scales')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-icp-0094",
+      "failure_category": "icp-misclassification",
+      "difficulty": "hard",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 0.9531,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.36,
+      "correct_classification": false,
+      "score_delta": 0.5931,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'Engineering capacity as your team scales')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-dc-0121",
+      "failure_category": "dual-control",
+      "difficulty": "medium",
+      "source_mode": "trace-derived",
+      "aggregate_score": 0.6562,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.34,
+      "correct_classification": true,
+      "score_delta": 0.3162,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['world-class', '\\\\bleverage\\\\b', 'cutting-edge']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.5,
+          "reason": "Subject length 96 chars exceeds max 60; Subject must start with Request/Follow-up/Context/Question (got: 'Your team is clearly behind the curve on')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-boc-0162",
+      "failure_category": "bench-overcommitment",
+      "difficulty": "hard",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.99,
+      "correct_classification": true,
+      "score_delta": 0.01,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-sr-0223",
+      "failure_category": "signal-reliability",
+      "difficulty": "hard",
+      "source_mode": "programmatic",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.94,
+      "correct_classification": true,
+      "score_delta": 0.06,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-goc-0208",
+      "failure_category": "gap-overclaiming",
+      "difficulty": "hard",
+      "source_mode": "hand-authored",
+      "aggregate_score": 0.9531,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.34,
+      "correct_classification": false,
+      "score_delta": 0.6131,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'Your team is significantly behind sector')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-soc-0012",
+      "failure_category": "signal-overclaiming",
+      "difficulty": "easy",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.96,
+      "correct_classification": true,
+      "score_delta": 0.04,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-soc-0001",
+      "failure_category": "signal-overclaiming",
+      "difficulty": "easy",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.76,
+      "correct_classification": true,
+      "score_delta": 0.24,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-ton-0177",
+      "failure_category": "tone-drift",
+      "difficulty": "medium",
+      "source_mode": "trace-derived",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.93,
+      "correct_classification": true,
+      "score_delta": 0.07,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-soc-0059",
+      "failure_category": "signal-overclaiming",
+      "difficulty": "hard",
+      "source_mode": "programmatic",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.91,
+      "correct_classification": true,
+      "score_delta": 0.09,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-sr-0220",
+      "failure_category": "signal-reliability",
+      "difficulty": "medium",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 0.6562,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.14,
+      "correct_classification": true,
+      "score_delta": 0.5162,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['world-class', '\\\\bleverage\\\\b', 'cutting-edge']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.5,
+          "reason": "Subject length 96 chars exceeds max 60; Subject must start with Request/Follow-up/Context/Question (got: 'Your team is clearly behind the curve on')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-sg-good-011",
+      "failure_category": "tone-drift",
+      "difficulty": "medium",
+      "source_mode": "hand-authored",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.88,
+      "correct_classification": true,
+      "score_delta": 0.12,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-soc-0027",
+      "failure_category": "signal-overclaiming",
+      "difficulty": "medium",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 0.9531,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.13,
+      "correct_classification": false,
+      "score_delta": 0.8231,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'Congrats on your new CTO appointment')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-icp-0066",
+      "failure_category": "icp-misclassification",
+      "difficulty": "easy",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 0.9531,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.2,
+      "correct_classification": false,
+      "score_delta": 0.7531,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'Engineering capacity as your team scales')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-soc-0041",
+      "failure_category": "signal-overclaiming",
+      "difficulty": "medium",
+      "source_mode": "programmatic",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.36,
+      "correct_classification": false,
+      "score_delta": 0.64,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-icp-0095",
+      "failure_category": "icp-misclassification",
+      "difficulty": "hard",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 0.9531,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.3,
+      "correct_classification": false,
+      "score_delta": 0.6531,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'Engineering capacity as your team scales')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-mtl-0245",
+      "failure_category": "multithread-leakage",
+      "difficulty": "hard",
+      "source_mode": "hand-authored",
+      "aggregate_score": 0.0937,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.44,
+      "correct_classification": true,
+      "score_delta": 0.3463,
+      "dimension_results": [
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['your .* stack']",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['!', 'world-class', '\\\\bleverage\\\\b', 'ecosystem', 'top talent', 'a-players', '\\\\brockstar\\\\b', 'synergy', 'supercharge']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.5,
+          "reason": "Exclamation mark(s) present; Subject must start with Request/Follow-up/Context/Question (got: 'Helping Harbor Engineering leverage worl')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-boc-0146",
+      "failure_category": "bench-overcommitment",
+      "difficulty": "easy",
+      "source_mode": "programmatic",
+      "aggregate_score": 0.9531,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.16,
+      "correct_classification": false,
+      "score_delta": 0.7931,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'ML engineers available for your platform')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-cp-0229",
+      "failure_category": "cost-pathology",
+      "difficulty": "easy",
+      "source_mode": "programmatic",
+      "aggregate_score": 0.6562,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.05,
+      "correct_classification": true,
+      "score_delta": 0.6062,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['world-class', '\\\\bleverage\\\\b', 'cutting-edge']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.5,
+          "reason": "Subject length 96 chars exceeds max 60; Subject must start with Request/Follow-up/Context/Question (got: 'Your team is clearly behind the curve on')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-sr-0216",
+      "failure_category": "signal-reliability",
+      "difficulty": "easy",
+      "source_mode": "programmatic",
+      "aggregate_score": 0.6562,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.0,
+      "correct_classification": true,
+      "score_delta": 0.6562,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['!', 'circling back', 'following up again', 'just checking in']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.5,
+          "reason": "Exclamation mark(s) present; Subject must start with Request/Follow-up/Context/Question (got: 'Following up again \u2014 wanted to circle ba')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-icp-0093",
+      "failure_category": "icp-misclassification",
+      "difficulty": "hard",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 0.9531,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.21,
+      "correct_classification": false,
+      "score_delta": 0.7431,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'Engineering capacity as your team scales')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-sch-0246",
+      "failure_category": "scheduling",
+      "difficulty": "easy",
+      "source_mode": "programmatic",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.78,
+      "correct_classification": true,
+      "score_delta": 0.22,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-sr-0219",
+      "failure_category": "signal-reliability",
+      "difficulty": "medium",
+      "source_mode": "programmatic",
+      "aggregate_score": 0.6562,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.21,
+      "correct_classification": true,
+      "score_delta": 0.4463,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['world-class', '\\\\bleverage\\\\b', 'cutting-edge']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.5,
+          "reason": "Subject length 96 chars exceeds max 60; Subject must start with Request/Follow-up/Context/Question (got: 'Your team is clearly behind the curve on')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-goc-0202",
+      "failure_category": "gap-overclaiming",
+      "difficulty": "medium",
+      "source_mode": "hand-authored",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.88,
+      "correct_classification": true,
+      "score_delta": 0.12,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-soc-0020",
+      "failure_category": "signal-overclaiming",
+      "difficulty": "easy",
+      "source_mode": "programmatic",
+      "aggregate_score": 0.4375,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.29,
+      "correct_classification": true,
+      "score_delta": 0.1475,
+      "dimension_results": [
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['aggressively hiring', 'scaling fast']",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-boc-0161",
+      "failure_category": "bench-overcommitment",
+      "difficulty": "hard",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 0.9531,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.16,
+      "correct_classification": false,
+      "score_delta": 0.7931,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'ML engineers available for your platform')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-boc-0148",
+      "failure_category": "bench-overcommitment",
+      "difficulty": "medium",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 0.9531,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.1,
+      "correct_classification": false,
+      "score_delta": 0.8531,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'ML engineers available for your platform')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-icp-0068",
+      "failure_category": "icp-misclassification",
+      "difficulty": "easy",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.76,
+      "correct_classification": true,
+      "score_delta": 0.24,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-cp-0231",
+      "failure_category": "cost-pathology",
+      "difficulty": "medium",
+      "source_mode": "programmatic",
+      "aggregate_score": 0.6562,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.24,
+      "correct_classification": true,
+      "score_delta": 0.4163,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['world-class', '\\\\bleverage\\\\b', 'cutting-edge']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.5,
+          "reason": "Subject length 96 chars exceeds max 60; Subject must start with Request/Follow-up/Context/Question (got: 'Your team is clearly behind the curve on')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-sg-bad-005",
+      "failure_category": "gap-overclaiming",
+      "difficulty": "medium",
+      "source_mode": "hand-authored",
+      "aggregate_score": 0.4375,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.05,
+      "correct_classification": true,
+      "score_delta": 0.3875,
+      "dimension_results": [
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['ai-native']",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-icp-0070",
+      "failure_category": "icp-misclassification",
+      "difficulty": "easy",
+      "source_mode": "programmatic",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.78,
+      "correct_classification": true,
+      "score_delta": 0.22,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-dc-0110",
+      "failure_category": "dual-control",
+      "difficulty": "easy",
+      "source_mode": "trace-derived",
+      "aggregate_score": 0.0937,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.16,
+      "correct_classification": true,
+      "score_delta": 0.0663,
+      "dimension_results": [
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['your .* stack']",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['!', 'world-class', '\\\\bleverage\\\\b', 'ecosystem', 'top talent', 'a-players', '\\\\brockstar\\\\b', 'synergy', 'supercharge']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.5,
+          "reason": "Exclamation mark(s) present; Subject must start with Request/Follow-up/Context/Question (got: 'Helping Echo Health leverage world-class')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-icp-0086",
+      "failure_category": "icp-misclassification",
+      "difficulty": "medium",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.77,
+      "correct_classification": true,
+      "score_delta": 0.23,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-sg-bad-006",
+      "failure_category": "signal-overclaiming",
+      "difficulty": "medium",
+      "source_mode": "hand-authored",
+      "aggregate_score": 0.3906,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.1,
+      "correct_classification": true,
+      "score_delta": 0.2906,
+      "dimension_results": [
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['aggressively hiring', 'scaling fast', 'rapid growth']",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'Congrats on scaling \u2014 engineering suppor')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-goc-0209",
+      "failure_category": "gap-overclaiming",
+      "difficulty": "hard",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.76,
+      "correct_classification": true,
+      "score_delta": 0.24,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-sg-bad-012",
+      "failure_category": "icp-misclassification",
+      "difficulty": "hard",
+      "source_mode": "hand-authored",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.15,
+      "correct_classification": false,
+      "score_delta": 0.85,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-icp-0069",
+      "failure_category": "icp-misclassification",
+      "difficulty": "easy",
+      "source_mode": "programmatic",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.78,
+      "correct_classification": true,
+      "score_delta": 0.22,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-goc-0192",
+      "failure_category": "gap-overclaiming",
+      "difficulty": "easy",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.99,
+      "correct_classification": true,
+      "score_delta": 0.01,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-soc-0033",
+      "failure_category": "signal-overclaiming",
+      "difficulty": "medium",
+      "source_mode": "programmatic",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.35,
+      "correct_classification": false,
+      "score_delta": 0.65,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-icp-0096",
+      "failure_category": "icp-misclassification",
+      "difficulty": "hard",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.78,
+      "correct_classification": true,
+      "score_delta": 0.22,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-sg-good-006",
+      "failure_category": "tone-drift",
+      "difficulty": "easy",
+      "source_mode": "hand-authored",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.87,
+      "correct_classification": true,
+      "score_delta": 0.13,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-icp-0067",
+      "failure_category": "icp-misclassification",
+      "difficulty": "easy",
+      "source_mode": "hand-authored",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.92,
+      "correct_classification": true,
+      "score_delta": 0.08,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-ton-0185",
+      "failure_category": "tone-drift",
+      "difficulty": "hard",
+      "source_mode": "trace-derived",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.93,
+      "correct_classification": true,
+      "score_delta": 0.07,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-dc-0133",
+      "failure_category": "dual-control",
+      "difficulty": "hard",
+      "source_mode": "programmatic",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.95,
+      "correct_classification": true,
+      "score_delta": 0.05,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-dc-0134",
+      "failure_category": "dual-control",
+      "difficulty": "hard",
+      "source_mode": "trace-derived",
+      "aggregate_score": 0.0937,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.01,
+      "correct_classification": true,
+      "score_delta": 0.0837,
+      "dimension_results": [
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['your .* stack']",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['!', 'world-class', '\\\\bleverage\\\\b', 'ecosystem', 'top talent', 'a-players', '\\\\brockstar\\\\b', 'synergy', 'supercharge']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.5,
+          "reason": "Exclamation mark(s) present; Subject must start with Request/Follow-up/Context/Question (got: 'Helping Zenith Engineering leverage worl')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-sg-bad-011",
+      "failure_category": "tone-drift",
+      "difficulty": "easy",
+      "source_mode": "hand-authored",
+      "aggregate_score": 0.1406,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.12,
+      "correct_classification": true,
+      "score_delta": 0.0206,
+      "dimension_results": [
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['your .* stack']",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['i wanted to reach out']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject length 111 chars exceeds max 60",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-dc-0128",
+      "failure_category": "dual-control",
+      "difficulty": "hard",
+      "source_mode": "trace-derived",
+      "aggregate_score": 0.0937,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.15,
+      "correct_classification": true,
+      "score_delta": 0.0563,
+      "dimension_results": [
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['your .* stack']",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['!', 'world-class', '\\\\bleverage\\\\b', 'ecosystem', 'top talent', 'a-players', '\\\\brockstar\\\\b', 'synergy', 'supercharge']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.5,
+          "reason": "Exclamation mark(s) present; Subject must start with Request/Follow-up/Context/Question (got: 'Helping Synthesis Labs leverage world-cl')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-soc-0042",
+      "failure_category": "signal-overclaiming",
+      "difficulty": "medium",
+      "source_mode": "trace-derived",
+      "aggregate_score": 0.3906,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.22,
+      "correct_classification": true,
+      "score_delta": 0.1706,
+      "dimension_results": [
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['your .* stack', 'given your .* environment']",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'Your dbt/Snowflake stack \u2014 we can match ')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-soc-0003",
+      "failure_category": "signal-overclaiming",
+      "difficulty": "easy",
+      "source_mode": "programmatic",
+      "aggregate_score": 0.9531,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.05,
+      "correct_classification": false,
+      "score_delta": 0.9031,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'Congrats on the Series B \u2014 scaling next?')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-ton-0180",
+      "failure_category": "tone-drift",
+      "difficulty": "medium",
+      "source_mode": "trace-derived",
+      "aggregate_score": 0.0937,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.18,
+      "correct_classification": true,
+      "score_delta": 0.0863,
+      "dimension_results": [
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['your .* stack']",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['!', 'world-class', '\\\\bleverage\\\\b', 'ecosystem', 'top talent', 'a-players', '\\\\brockstar\\\\b', 'synergy', 'supercharge']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.5,
+          "reason": "Exclamation mark(s) present; Subject must start with Request/Follow-up/Context/Question (got: 'Helping Nexus Engineering leverage world')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-soc-0036",
+      "failure_category": "signal-overclaiming",
+      "difficulty": "medium",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.9,
+      "correct_classification": true,
+      "score_delta": 0.1,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-ton-0182",
+      "failure_category": "tone-drift",
+      "difficulty": "medium",
+      "source_mode": "trace-derived",
+      "aggregate_score": 0.6562,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.2,
+      "correct_classification": true,
+      "score_delta": 0.4562,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['world-class', '\\\\bleverage\\\\b', 'cutting-edge']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.5,
+          "reason": "Subject length 96 chars exceeds max 60; Subject must start with Request/Follow-up/Context/Question (got: 'Your team is clearly behind the curve on')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-soc-0004",
+      "failure_category": "signal-overclaiming",
+      "difficulty": "easy",
+      "source_mode": "trace-derived",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.77,
+      "correct_classification": true,
+      "score_delta": 0.23,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-sg-bad-002",
+      "failure_category": "tone-drift",
+      "difficulty": "easy",
+      "source_mode": "hand-authored",
+      "aggregate_score": 0.7031,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.1,
+      "correct_classification": false,
+      "score_delta": 0.6031,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['i hope this email finds you well', 'i wanted to reach out']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'Engineering capacity at Vertex Analytics')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-soc-0045",
+      "failure_category": "signal-overclaiming",
+      "difficulty": "hard",
+      "source_mode": "programmatic",
+      "aggregate_score": 0.9531,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.22,
+      "correct_classification": false,
+      "score_delta": 0.7331,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'Congrats on your new CTO appointment')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-sg-good-009",
+      "failure_category": "tone-drift",
+      "difficulty": "easy",
+      "source_mode": "hand-authored",
+      "aggregate_score": 0.9531,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.95,
+      "correct_classification": true,
+      "score_delta": 0.0031,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject length 63 chars exceeds max 60",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-ton-0169",
+      "failure_category": "tone-drift",
+      "difficulty": "easy",
+      "source_mode": "programmatic",
+      "aggregate_score": 0.0937,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.43,
+      "correct_classification": true,
+      "score_delta": 0.3362,
+      "dimension_results": [
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['your .* stack']",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['!', 'world-class', '\\\\bleverage\\\\b', 'ecosystem', 'top talent', 'a-players', '\\\\brockstar\\\\b', 'synergy', 'supercharge']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.5,
+          "reason": "Exclamation mark(s) present; Subject must start with Request/Follow-up/Context/Question (got: 'Helping Harbor Engineering leverage worl')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-ton-0190",
+      "failure_category": "tone-drift",
+      "difficulty": "hard",
+      "source_mode": "trace-derived",
+      "aggregate_score": 0.6562,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.11,
+      "correct_classification": true,
+      "score_delta": 0.5463,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['!', 'circling back', 'following up again', 'just checking in']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.5,
+          "reason": "Exclamation mark(s) present; Subject must start with Request/Follow-up/Context/Question (got: 'Following up again \u2014 wanted to circle ba')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-ton-0171",
+      "failure_category": "tone-drift",
+      "difficulty": "easy",
+      "source_mode": "programmatic",
+      "aggregate_score": 0.0937,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.13,
+      "correct_classification": true,
+      "score_delta": 0.0363,
+      "dimension_results": [
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['your .* stack']",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['!', 'world-class', '\\\\bleverage\\\\b', 'ecosystem', 'top talent', 'a-players', '\\\\brockstar\\\\b', 'synergy', 'supercharge']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.5,
+          "reason": "Exclamation mark(s) present; Subject must start with Request/Follow-up/Context/Question (got: 'Helping Unified Data Co leverage world-c')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-cp-0230",
+      "failure_category": "cost-pathology",
+      "difficulty": "medium",
+      "source_mode": "programmatic",
+      "aggregate_score": 0.0937,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.14,
+      "correct_classification": true,
+      "score_delta": 0.0463,
+      "dimension_results": [
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['your .* stack']",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['!', 'world-class', '\\\\bleverage\\\\b', 'ecosystem', 'top talent', 'a-players', '\\\\brockstar\\\\b', 'synergy', 'supercharge']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.5,
+          "reason": "Exclamation mark(s) present; Subject must start with Request/Follow-up/Context/Question (got: 'Helping Gemini Data leverage world-class')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-sr-0224",
+      "failure_category": "signal-reliability",
+      "difficulty": "hard",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 1.0,
+      "passed": true,
+      "expected_pass": true,
+      "expected_score": 0.83,
+      "correct_classification": true,
+      "score_delta": 0.17,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All length/format checks passed",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-boc-0156",
+      "failure_category": "bench-overcommitment",
+      "difficulty": "medium",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 0.9531,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.13,
+      "correct_classification": false,
+      "score_delta": 0.8231,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'ML engineers available for your platform')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-boc-0157",
+      "failure_category": "bench-overcommitment",
+      "difficulty": "hard",
+      "source_mode": "multi-llm-synthesis",
+      "aggregate_score": 0.9531,
+      "passed": true,
+      "expected_pass": false,
+      "expected_score": 0.44,
+      "correct_classification": false,
+      "score_delta": 0.5131,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.75,
+          "reason": "Subject must start with Request/Follow-up/Context/Question (got: 'ML engineers available for your platform')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    },
+    {
+      "task_id": "tb-dc-0117",
+      "failure_category": "dual-control",
+      "difficulty": "medium",
+      "source_mode": "programmatic",
+      "aggregate_score": 0.6562,
+      "passed": false,
+      "expected_pass": false,
+      "expected_score": 0.01,
+      "correct_classification": true,
+      "score_delta": 0.6462,
+      "dimension_results": [
+        {
+          "pass": true,
+          "score": 1.0,
+          "reason": "All regex checks passed",
+          "dimension": "honesty_flag_compliance",
+          "weight": 0.45
+        },
+        {
+          "pass": false,
+          "score": 0.0,
+          "reason": "Banned pattern(s) found: ['!', 'circling back', 'following up again', 'just checking in']",
+          "dimension": "tone_marker_compliance",
+          "weight": 0.2
+        },
+        {
+          "pass": false,
+          "score": 0.5,
+          "reason": "Exclamation mark(s) present; Subject must start with Request/Follow-up/Context/Question (got: 'Following up again \u2014 wanted to circle ba')",
+          "dimension": "format_compliance",
+          "weight": 0.15
+        },
+        {
+          "pass": null,
+          "score": null,
+          "reason": "LLM judge skipped \u2014 set OPENROUTER_API_KEY to enable",
+          "dimension": "signal_grounding",
+          "weight": 0.2
+        }
+      ],
+      "scored_at": "2026-04-29T14:51:01Z",
+      "judge_model": "qwen/qwen3-235b-a22b",
+      "seed": 42
+    }
+  ],
+  "summary": {
+    "n_tasks": 82,
+    "mean_score": 0.7759,
+    "pass_rate": 0.6585,
+    "classification_accuracy": 0.7439,
+    "category_mean_scores": {
+      "bench-overcommitment": 0.9062,
+      "signal-overclaiming": 0.8203,
+      "dual-control": 0.4826,
+      "signal-reliability": 0.8281,
+      "gap-overclaiming": 0.8259,
+      "tone-drift": 0.6454,
+      "icp-misclassification": 0.9812,
+      "multithread-leakage": 0.0937,
+      "cost-pathology": 0.4687,
+      "scheduling": 1.0
+    }
+  }
+}
