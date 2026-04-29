@@ -38,10 +38,10 @@ My Week 10 failure taxonomy ranks Signal-Over-claiming and Dual-Control as joint
 
 ## Partitioning Protocol
 
-Total tasks: 250  
-- Train partition: 125 tasks (50%) — `tenacious_bench_v0.1/train/`
-- Dev partition: 75 tasks (30%) — `tenacious_bench_v0.1/dev/`
-- Held-out partition: 50 tasks (20%) — `tenacious_bench_v0.1/held_out/` (sealed)
+Total tasks: 274 (250 programmatic + 24 hand-authored from Style Guide v2)  
+- Train partition: 137 tasks (50%) — `tenacious_bench_v0.1/train/`
+- Dev partition: 82 tasks (30%) — `tenacious_bench_v0.1/dev/`
+- Held-out partition: 55 tasks (20%) — `tenacious_bench_v0.1/held_out/` (sealed)
 
 Stratification: each partition maintains the same proportional distribution across:
 - `failure_category` (10 categories)
@@ -96,7 +96,8 @@ Generation and judging never use the same model on the same task. The rotation p
 | Programmatic | 30% | 75 |
 | Multi-LLM synthesis | 25% | 62 |
 | Hand-authored adversarial | 15% | 38 |
-| **Total** | **100%** | **250** |
+| Hand-authored (Style Guide v2) | +24 labeled | 24 |
+| **Total** | — | **274** |
 
 Trace-derived tasks are sourced from `eval/trace_log.jsonl` in the Week 10 repo, redacted of any Tenacious-internal identifiers and restructured into (brief, candidate_output, rubric) triples.
 
