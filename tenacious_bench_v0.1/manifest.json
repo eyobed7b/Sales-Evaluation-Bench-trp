@@ -1,0 +1,33 @@
+{
+  "version": "0.1",
+  "total_tasks": 250,
+  "seed": 42,
+  "partitions": {
+    "train": 125,
+    "dev": 75,
+    "held_out": 50
+  },
+  "failure_category_counts": {
+    "gap-overclaiming": 20,
+    "signal-overclaiming": 60,
+    "dual-control": 30,
+    "signal-reliability": 15,
+    "tone-drift": 25,
+    "icp-misclassification": 45,
+    "cost-pathology": 10,
+    "multithread-leakage": 10,
+    "bench-overcommitment": 30,
+    "scheduling": 5
+  },
+  "source_mode_counts": {
+    "hand-authored": 38,
+    "programmatic": 96,
+    "multi-llm-synthesis": 68,
+    "trace-derived": 48
+  },
+  "difficulty_counts": {
+    "medium": 86,
+    "hard": 73,
+    "easy": 91
+  }
+}

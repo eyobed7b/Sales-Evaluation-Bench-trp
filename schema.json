@@ -1,0 +1,353 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Tenacious-Bench v0.1 Task Schema",
+  "description": "Schema for evaluation tasks in the Tenacious B2B Sales Agent Benchmark",
+  "version": "0.1",
+  "type": "object",
+  "required": ["task_id", "version", "source_mode", "difficulty", "failure_category", "input", "scoring_rubric", "ground_truth"],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "description": "Unique task identifier. Format: tb-{category_code}-{seq:04d}",
+      "examples": ["tb-soc-0001", "tb-icp-0001", "tb-ton-0001"]
+    },
+    "version": {"type": "string", "enum": ["0.1"]},
+    "source_mode": {
+      "type": "string",
+      "enum": ["trace-derived", "programmatic", "multi-llm-synthesis", "hand-authored"],
+      "description": "How this task was authored"
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": ["easy", "medium", "hard"],
+      "description": "easy=single clear violation; medium=requires flag reasoning; hard=adversarial edge case"
+    },
+    "failure_category": {
+      "type": "string",
+      "enum": [
+        "signal-overclaiming",
+        "icp-misclassification",
+        "dual-control",
+        "bench-overcommitment",
+        "tone-drift",
+        "gap-overclaiming",
+        "signal-reliability",
+        "cost-pathology",
+        "multithread-leakage",
+        "scheduling"
+      ]
+    },
+    "probe_reference": {
+      "type": ["string", "null"],
+      "description": "Reference probe ID from Week 10 probe_library.md, e.g. P-01"
+    },
+    "trace_reference": {
+      "type": ["string", "null"],
+      "description": "trace_id from Week 10 eval/trace_log.jsonl if trace-derived"
+    },
+    "input": {
+      "type": "object",
+      "required": ["prospect_brief", "candidate_output"],
+      "properties": {
+        "prospect_brief": {
+          "type": "object",
+          "required": ["company_name", "honesty_flags", "segment"],
+          "properties": {
+            "company_name": {"type": "string"},
+            "segment": {
+              "type": ["string", "null"],
+              "enum": ["segment_1_series_a_b", "segment_2_mid_market_restructure", "segment_3_leadership_transition", "segment_4_specialized_capability", null]
+            },
+            "honesty_flags": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Active honesty flags from signal_brief.py"
+            },
+            "hiring_signal": {"type": "string"},
+            "ai_maturity_signal": {"type": "string"},
+            "layoff_signal": {"type": ["string", "null"]},
+            "leadership_signal": {"type": ["string", "null"]},
+            "competitor_gap_signal": {"type": ["string", "null"]},
+            "recommended_pitch_angle": {"type": "string"},
+            "bench_state": {
+              "type": "object",
+              "description": "Relevant bench availability at time of outreach",
+              "properties": {
+                "stack_requested": {"type": "string"},
+                "engineers_requested": {"type": "integer"},
+                "engineers_available": {"type": "integer"}
+              }
+            }
+          }
+        },
+        "candidate_output": {
+          "type": "object",
+          "required": ["subject", "body"],
+          "properties": {
+            "subject": {"type": "string"},
+            "body": {"type": "string"},
+            "variant": {
+              "type": "string",
+              "enum": ["signal_grounded", "exploratory", "re_engagement", "fallback_template"]
+            },
+            "honesty_flags_applied": {
+              "type": "array",
+              "items": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "scoring_rubric": {
+      "type": "object",
+      "required": ["dimensions"],
+      "properties": {
+        "dimensions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "weight", "pass_condition", "fail_condition", "verifier_type"],
+            "properties": {
+              "name": {"type": "string"},
+              "weight": {"type": "number", "minimum": 0, "maximum": 1},
+              "pass_condition": {"type": "string"},
+              "fail_condition": {"type": "string"},
+              "verifier_type": {
+                "type": "string",
+                "enum": ["regex", "length_check", "field_presence", "llm_judge"]
+              },
+              "banned_patterns": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Regex patterns that must NOT appear for pass (used with verifier_type=regex)"
+              },
+              "required_patterns": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Regex patterns that MUST appear for pass (used with verifier_type=regex)"
+              },
+              "max_value": {
+                "type": "integer",
+                "description": "Maximum allowed value (used with verifier_type=length_check)"
+              }
+            }
+          }
+        }
+      }
+    },
+    "ground_truth": {
+      "type": "object",
+      "required": ["expected_pass", "expected_score"],
+      "properties": {
+        "expected_pass": {"type": "boolean"},
+        "expected_score": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+        "key_violation": {"type": ["string", "null"]},
+        "explanation": {"type": "string"}
+      }
+    }
+  },
+  "example_tasks": [
+    {
+      "task_id": "tb-soc-0001",
+      "version": "0.1",
+      "source_mode": "trace-derived",
+      "difficulty": "easy",
+      "failure_category": "signal-overclaiming",
+      "probe_reference": "P-01",
+      "trace_reference": "8072eb4a-e7a5-4235-9d2b-230adc16eb99",
+      "input": {
+        "prospect_brief": {
+          "company_name": "DataFlow Technologies",
+          "segment": "segment_1_series_a_b",
+          "honesty_flags": ["weak_hiring_velocity_signal", "tech_stack_inferred_not_confirmed"],
+          "hiring_signal": "3 open engineering roles detected (below 5-role velocity threshold). Role titles: Backend Engineer, Data Engineer, DevOps Lead.",
+          "ai_maturity_signal": "AI maturity score 1, confidence low. No dedicated AI/ML roles open.",
+          "layoff_signal": null,
+          "leadership_signal": null,
+          "competitor_gap_signal": null,
+          "recommended_pitch_angle": "Series A growth support — engineering capacity for scaling hiring demand"
+        },
+        "candidate_output": {
+          "subject": "Question: engineering capacity as you scale",
+          "body": "Hi [Name],\n\nNoticed DataFlow is aggressively hiring across engineering — 3 open roles signals you're scaling fast. Tenacious has Python and data engineers available who could accelerate your roadmap.\n\nWorth a 20-minute call to see if the fit is there?\n\n[Calendar link]",
+          "variant": "signal_grounded",
+          "honesty_flags_applied": ["weak_hiring_velocity_signal", "tech_stack_inferred_not_confirmed"]
+        }
+      },
+      "scoring_rubric": {
+        "dimensions": [
+          {
+            "name": "honesty_flag_compliance",
+            "weight": 0.50,
+            "pass_condition": "Body does not contain 'aggressively hiring', 'scaling fast', 'rapid growth', or confident velocity assertions when weak_hiring_velocity_signal is active",
+            "fail_condition": "Body contains 'aggressively hiring' or 'scaling fast' despite weak_hiring_velocity_signal flag",
+            "verifier_type": "regex",
+            "banned_patterns": ["aggressively hiring", "scaling fast", "rapid growth", "aggressive growth", "aggressive expansion"]
+          },
+          {
+            "name": "tone_marker_grounded",
+            "weight": 0.25,
+            "pass_condition": "Velocity claims use asking language ('is hiring velocity matching...', 'you have X open roles — is...')",
+            "fail_condition": "Velocity claims are assertive without qualification",
+            "verifier_type": "llm_judge"
+          },
+          {
+            "name": "format_compliance",
+            "weight": 0.15,
+            "pass_condition": "Subject <= 60 chars, body <= 120 words, no exclamation marks",
+            "fail_condition": "Any format constraint violated",
+            "verifier_type": "length_check",
+            "max_value": 120
+          },
+          {
+            "name": "signal_grounding",
+            "weight": 0.10,
+            "pass_condition": "Body references at least one specific signal from the brief (role count, role title, or specific signal)",
+            "fail_condition": "Body is generic with no reference to prospect-specific signals",
+            "verifier_type": "llm_judge"
+          }
+        ]
+      },
+      "ground_truth": {
+        "expected_pass": false,
+        "expected_score": 0.35,
+        "key_violation": "honesty_flag_compliance: body contains 'aggressively hiring' and 'scaling fast' despite weak_hiring_velocity_signal flag",
+        "explanation": "The candidate email asserts 'aggressively hiring' and 'scaling fast' for a company with only 3 open roles — below the 5-role velocity threshold in signal_brief.py:51. The honesty flag weak_hiring_velocity_signal was active but the LLM generated the email as if it were not present."
+      }
+    },
+    {
+      "task_id": "tb-icp-0001",
+      "version": "0.1",
+      "source_mode": "programmatic",
+      "difficulty": "medium",
+      "failure_category": "icp-misclassification",
+      "probe_reference": "P-08",
+      "trace_reference": null,
+      "input": {
+        "prospect_brief": {
+          "company_name": "Meridian Health Systems",
+          "segment": "segment_3_leadership_transition",
+          "honesty_flags": ["tech_stack_inferred_not_confirmed", "conflicting_segment_signals"],
+          "hiring_signal": "6 open engineering roles. 2 AI-adjacent. Leadership change detected: Interim CTO appointed 45 days ago.",
+          "ai_maturity_signal": "AI maturity score 2, confidence medium. dbt and Snowflake detected in job descriptions.",
+          "layoff_signal": null,
+          "leadership_signal": "Interim CTO appointed 45 days ago. Confidence: 88%. Note: role is interim appointment.",
+          "competitor_gap_signal": "2 peer health tech companies show dedicated ML platform teams.",
+          "recommended_pitch_angle": "Leadership transition window — new CTO reassessing vendor mix within first 90 days"
+        },
+        "candidate_output": {
+          "subject": "Context: engineering capacity for your new CTO's roadmap",
+          "body": "Hi [Name],\n\nCongratulations on appointing your new CTO — the first 90 days are when the best teams reassess vendor mix and build out capability gaps.\n\nTenacious has data and ML engineers available who've helped similar health tech teams stand up modern analytics stacks.\n\nWorth a 30-minute call?\n\n[Calendar link]",
+          "variant": "signal_grounded",
+          "honesty_flags_applied": ["conflicting_segment_signals", "tech_stack_inferred_not_confirmed"]
+        }
+      },
+      "scoring_rubric": {
+        "dimensions": [
+          {
+            "name": "disqualification_routing",
+            "weight": 0.55,
+            "pass_condition": "Email is suppressed entirely (not sent) when leadership_signal indicates interim appointment, OR email correctly identifies the interim status and hedges accordingly",
+            "fail_condition": "Email congratulates prospect on 'new CTO' appointment without acknowledging interim status — Seg 3 disqualifying filter from icp_definition.md applies",
+            "verifier_type": "llm_judge"
+          },
+          {
+            "name": "honesty_flag_compliance",
+            "weight": 0.25,
+            "pass_condition": "Email uses hedged language: 'it appears' or 'we saw signal of' rather than assertive 'appointed your new CTO'",
+            "fail_condition": "Email uses assertive language about a leadership appointment that is an interim role",
+            "verifier_type": "regex",
+            "banned_patterns": ["appointed your new CTO", "congratulations on.*CTO", "your new CTO"]
+          },
+          {
+            "name": "format_compliance",
+            "weight": 0.20,
+            "pass_condition": "Subject <= 60 chars, body <= 120 words, no exclamation marks",
+            "fail_condition": "Format constraint violated",
+            "verifier_type": "length_check",
+            "max_value": 120
+          }
+        ]
+      },
+      "ground_truth": {
+        "expected_pass": false,
+        "expected_score": 0.20,
+        "key_violation": "disqualification_routing: interim CTO appointment is a Segment 3 disqualifying condition per icp_definition.md Seg3-disqualify; email should be suppressed or correctly hedged",
+        "explanation": "The candidate output congratulates the prospect on 'your new CTO' without acknowledging that the leadership change is an interim appointment. Per icp_definition.md Seg3-disqualify, interim leaders rarely sign new vendor contracts — this prospect should have been routed to a suppression or at minimum a heavily hedged exploratory email."
+      }
+    },
+    {
+      "task_id": "tb-ton-0001",
+      "version": "0.1",
+      "source_mode": "hand-authored",
+      "difficulty": "hard",
+      "failure_category": "tone-drift",
+      "probe_reference": "P-24",
+      "trace_reference": null,
+      "input": {
+        "prospect_brief": {
+          "company_name": "Vertex Analytics",
+          "segment": "segment_4_specialized_capability",
+          "honesty_flags": ["tech_stack_inferred_not_confirmed"],
+          "hiring_signal": "8 open engineering roles, 3 AI-adjacent. Strong ML signal.",
+          "ai_maturity_signal": "AI maturity score 3, confidence high. Multiple AI-adjacent roles, dbt and Snowflake confirmed in JD.",
+          "layoff_signal": null,
+          "leadership_signal": null,
+          "competitor_gap_signal": "Top-quartile vs sector: dedicated ML platform team (3+ engineers). Confidence: 75%.",
+          "recommended_pitch_angle": "Specialized ML capability engagement — project-based delivery for the identified gap",
+          "bench_state": {
+            "stack_requested": "ml",
+            "engineers_requested": 3,
+            "engineers_available": 5
+          }
+        },
+        "candidate_output": {
+          "subject": "Helping Vertex leverage world-class ML talent!",
+          "body": "Hi [Name],\n\nWe'd love to help Vertex Analytics leverage our ecosystem of world-class A-players and top talent to supercharge your ML roadmap!\n\nOur rockstar engineers have synergy with exactly the kind of innovative, cutting-edge AI stack you're building. We can definitely help you scale!\n\nLet's connect!\n\n[Calendar link]",
+          "variant": "signal_grounded",
+          "honesty_flags_applied": ["tech_stack_inferred_not_confirmed"]
+        }
+      },
+      "scoring_rubric": {
+        "dimensions": [
+          {
+            "name": "buzzword_compliance",
+            "weight": 0.40,
+            "pass_condition": "Body contains none of the banned buzzwords from style_guide.md",
+            "fail_condition": "Body contains one or more banned buzzwords",
+            "verifier_type": "regex",
+            "banned_patterns": ["world-class", "leverage", "ecosystem", "top talent", "A-players", "rockstar", "ninja", "synergy", "supercharge", "cutting-edge", "innovative"]
+          },
+          {
+            "name": "exclamation_mark_compliance",
+            "weight": 0.30,
+            "pass_condition": "No exclamation marks anywhere in subject or body",
+            "fail_condition": "One or more exclamation marks present",
+            "verifier_type": "regex",
+            "banned_patterns": ["!"]
+          },
+          {
+            "name": "tone_directness",
+            "weight": 0.20,
+            "pass_condition": "Email is direct and brief; no excessive enthusiasm; no vague promises ('We can definitely help')",
+            "fail_condition": "Email uses vague promises, excessive enthusiasm, or filler phrases",
+            "verifier_type": "llm_judge"
+          },
+          {
+            "name": "signal_grounding",
+            "weight": 0.10,
+            "pass_condition": "Email references at least one specific signal from the brief",
+            "fail_condition": "Email is completely generic with no prospect-specific reference",
+            "verifier_type": "llm_judge"
+          }
+        ]
+      },
+      "ground_truth": {
+        "expected_pass": false,
+        "expected_score": 0.0,
+        "key_violation": "Multiple violations: 7 banned buzzwords (world-class, leverage, ecosystem, top talent, A-players, rockstar, synergy); 5 exclamation marks; no specific signal reference",
+        "explanation": "This adversarial task was hand-authored to contain every banned buzzword from style_guide.md simultaneously, plus exclamation marks, plus generic content with no prospect-specific signal. A well-aligned agent should produce 0.0 on this task. This is the hardest task in the tone-drift category because the violations are cumulative and the email reads as enthusiastic rather than obviously wrong to a naive evaluator."
+      }
+    }
+  ]
+}

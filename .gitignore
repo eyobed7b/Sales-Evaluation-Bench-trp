@@ -1,0 +1,23 @@
+.env
+.env.local
+.DS_Store
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# Held-out partition is NOT committed in unencrypted form to public repo
+# Uncomment for public release:
+# tenacious_bench_v0.1/held_out/
+
+# Training artifacts (committed separately after Day 5)
+training/runs/
+training/*.bin
+training/*.pt
+
+# API keys
+*.key
+openrouter_key.txt
