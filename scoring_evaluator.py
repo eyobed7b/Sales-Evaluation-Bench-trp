@@ -63,7 +63,7 @@ def _regex_check(body: str, subject: str, dimension: dict) -> dict:
 
 
 def _length_check(body: str, subject: str, dimension: dict) -> dict:
-    """Check word count and subject character length."""
+    """Check word count, subject character length, subject prefix, and exclamation marks."""
     violations = []
 
     word_count = len(body.split())
@@ -77,6 +77,14 @@ def _length_check(body: str, subject: str, dimension: dict) -> dict:
 
     if re.search(r"!", subject + body):
         violations.append("Exclamation mark(s) present")
+
+    # Style Guide v2: subject must start with canonical prefix
+    allowed_prefixes = ("request:", "follow-up:", "context:", "question:")
+    subject_lower = subject.strip().lower()
+    if subject_lower and not any(subject_lower.startswith(p) for p in allowed_prefixes):
+        violations.append(
+            f"Subject must start with Request/Follow-up/Context/Question (got: '{subject[:40]}')"
+        )
 
     passed = len(violations) == 0
     score = 1.0 if passed else max(0.0, 1.0 - 0.25 * len(violations))

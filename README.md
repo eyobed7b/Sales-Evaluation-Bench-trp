@@ -12,7 +12,7 @@
 
 ## Overview
 
-Tenacious-Bench v0.1 is a 250-task evaluation dataset for B2B outbound sales agents. It measures failure modes that generic benchmarks (τ²-Bench retail) cannot grade:
+Tenacious-Bench v0.1 is a 274-task evaluation dataset for B2B outbound sales agents (250 programmatic + 24 hand-authored from Style Guide v2). It measures failure modes that generic benchmarks (τ²-Bench retail) cannot grade:
 
 - **Honesty flag compliance** — does the agent respect constraints like `weak_hiring_velocity_signal` and `layoff_overrides_funding` at generation time?
 - **ICP disqualification routing** — does the agent suppress outreach to prospects that meet documented disqualifying conditions?
@@ -36,11 +36,13 @@ Sales-Evaluation-Bench-trp/
 ├── contamination_check.json           ← N-gram, embedding, time-shift results
 ├── inter_rater_agreement.md           ← Self-labeling κ scores per rubric dimension
 ├── cost_log.md                        ← All API and compute charges
+├── seed/
+│   └── style_guide_v2.md             ← Tenacious Style Guide v2 (banned phrases, tone markers, 24 labeled drafts)
 ├── tenacious_bench_v0.1/
 │   ├── manifest.json                  ← Dataset manifest (counts, seed, distribution)
-│   ├── train/tasks.jsonl              ← 125 training tasks (50%)
-│   ├── dev/tasks.jsonl                ← 75 dev tasks (30%)
-│   └── held_out/tasks.jsonl           ← 50 held-out tasks (20%, sealed)
+│   ├── train/tasks.jsonl              ← 137 training tasks (50%)
+│   ├── dev/tasks.jsonl                ← 82 dev tasks (30%)
+│   └── held_out/tasks.jsonl           ← 55 held-out tasks (20%, sealed)
 ├── generation_scripts/
 │   ├── generate_dataset.py            ← Reproducible dataset generation (seed=42)
 │   └── contamination_check.py        ← Contamination check script
@@ -79,10 +81,10 @@ python generation_scripts/generate_dataset.py \
 
 Expected output for dev partition (Week 10 baseline, no trained judge):
 ```
-Scored 75 tasks
-Mean score:   ~0.52
-Pass rate:    ~0.61
-Accuracy:     ~0.68
+Scored 82 tasks
+Mean score:   ~0.78
+Pass rate:    ~0.66
+Accuracy:     ~0.74
 ```
 
 A stranger should be able to run this and reproduce a score within 2 percentage points.
@@ -93,9 +95,9 @@ A stranger should be able to run this and reproduce a score within 2 percentage 
 
 | Partition | Tasks | Pass rate (expected) |
 |---|---|---|
-| train | 125 | ~62% |
-| dev | 75 | ~61% |
-| held_out | 50 | ~60% (sealed) |
+| train | 137 | ~62% |
+| dev | 82 | ~61% |
+| held_out | 55 | ~60% (sealed) |
 
 **Failure category distribution:**
 
@@ -145,6 +147,7 @@ Training runs and ablation results will be committed to `training/` and `ablatio
 | Contamination prevention | `contamination_check.json`, `generation_scripts/contamination_check.py` |
 | Methodology rationale | `methodology.md` |
 | Multi-LLM synthesis routing | `generation_scripts/generate_dataset.py`, `synthesis_memos/` |
+| Tone compliance spec | `seed/style_guide_v2.md` |
 | Cost discipline | `cost_log.md` |
 
 ---

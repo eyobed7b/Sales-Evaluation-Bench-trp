@@ -317,27 +317,35 @@ def _build_dimensions(category: str, flags: list, bench_gap: bool) -> list:
             "banned_patterns": banned if banned else ["placeholder_no_banned"],
         })
 
-    # Tone marker compliance
+    # Tone marker compliance (Style Guide v2 full banned phrase list)
     dims.append({
         "name": "tone_marker_compliance",
         "weight": 0.20,
-        "pass_condition": "No exclamation marks; no banned buzzwords (world-class, leverage, ecosystem, top talent, A-players, rockstar, synergy, ninja); no condescending framing",
+        "pass_condition": "No exclamation marks; no banned buzzwords from Style Guide v2; no condescending framing; no external bench references",
         "fail_condition": "One or more tone violations present",
         "verifier_type": "regex",
         "banned_patterns": [
-            "!", "world-class", r"\bleverage\b", "ecosystem", "top talent",
-            "a-players", "rockstar", "ninja", "synergy", "supercharge",
-            "cutting-edge", "game-changer", "circling back", "following up again",
-            "just checking in"
+            "!",
+            "world-class", r"\bleverage\b", "ecosystem", "top talent",
+            "a-players", r"\brockstar\b", r"\bninja\b", "synergy", "supercharge",
+            "cutting-edge", "game-changer", "disruptor", "paradigm shift",
+            r"\bskyrocket\b", r"\bwizard\b", "our proprietary",
+            "you'll regret", "don't miss out", "limited availability", "act now",
+            "per my last email", "as per my previous", "our .* employees",
+            "i hope this email finds you well", "i wanted to reach out",
+            "circling back", "following up again", "just checking in",
+            "looping back", "touch base",
+            # External bench references (Style Guide v2 section 2.5)
+            r"\bbench\b",
         ],
     })
 
-    # Format compliance
+    # Format compliance (Style Guide v2: prefix rule + length + no exclamations)
     dims.append({
         "name": "format_compliance",
         "weight": 0.15,
-        "pass_condition": "Subject <= 60 chars; body <= 120 words",
-        "fail_condition": "Subject or body exceeds format limits",
+        "pass_condition": "Subject <= 60 chars; body <= 120 words; subject starts with Request/Follow-up/Context/Question",
+        "fail_condition": "Subject or body exceeds format limits, or subject missing canonical prefix",
         "verifier_type": "length_check",
         "max_value": 120,
     })
@@ -352,6 +360,913 @@ def _build_dimensions(category: str, flags: list, bench_gap: bool) -> list:
     })
 
     return dims
+
+
+def _build_style_guide_labeled_tasks() -> list:
+    """
+    24 hand-authored tasks from Style Guide v2 (12 GOOD + 12 BAD).
+    These are canonical examples grounded directly in the style guide labeled drafts.
+    Source: seed/style_guide_v2.md, Section 6.
+    """
+    def _sg_dimensions(category, flags, bench_gap=False):
+        """Build dimensions for style guide tasks (same logic as _build_dimensions)."""
+        return _build_dimensions(category, flags, bench_gap)
+
+    tasks = []
+
+    # ── 12 GOOD drafts ──────────────────────────────────────────────────────────
+
+    tasks.append({
+        "task_id": "tb-sg-good-001",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "easy",
+        "failure_category": "tone-drift",
+        "probe_reference": "P-23",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "Cascade Fintech",
+                "segment": "segment_1_series_a_b",
+                "honesty_flags": ["tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "4 open backend engineering roles detected (above threshold). Stack signals: go.",
+                "ai_maturity_signal": "AI maturity score 1, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Series A/B growth support — engineering capacity for scaling",
+                "bench_state": {"stack_requested": "go", "engineers_requested": 5, "engineers_available": 3},
+            },
+            "candidate_output": {
+                "subject": "Question: engineering capacity at Cascade Fintech",
+                "body": "Hi [Name],\n\nSaw 4 open backend engineering roles at Cascade since Q1. Tenacious has Go engineers available.\n\nWorth a 20-minute call to see if the count and timeline match your need?\n\n[Calendar link]",
+                "variant": "signal_grounded",
+                "honesty_flags_applied": ["tech_stack_inferred_not_confirmed"],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("tone-drift", ["tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": True,
+            "expected_score": 0.92,
+            "key_violation": None,
+            "explanation": "All 5 tone markers satisfied. Subject prefix correct. Signal grounded in role count. No banned phrases.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-good-002",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "medium",
+        "failure_category": "signal-overclaiming",
+        "probe_reference": "P-01",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "Vertex Analytics",
+                "segment": "segment_4_specialized_capability",
+                "honesty_flags": ["weak_hiring_velocity_signal", "tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "2 open ML roles detected (below velocity threshold). Stack signals: ml.",
+                "ai_maturity_signal": "AI maturity score 2, confidence medium.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Specialized ML/data capability engagement",
+                "bench_state": {"stack_requested": "ml", "engineers_requested": 3, "engineers_available": 5},
+            },
+            "candidate_output": {
+                "subject": "Context: ML roles at Vertex Analytics",
+                "body": "Hi [Name],\n\nNoticed 2 open ML roles at Vertex — small sample, so hard to read the velocity, but there's signal. Tenacious has ML engineers available if there's a capacity gap worth scoping.\n\nWorth a 20-minute call?\n\n[Calendar link]",
+                "variant": "signal_grounded",
+                "honesty_flags_applied": ["weak_hiring_velocity_signal", "tech_stack_inferred_not_confirmed"],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("signal-overclaiming", ["weak_hiring_velocity_signal", "tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": True,
+            "expected_score": 0.90,
+            "key_violation": None,
+            "explanation": "Correctly acknowledges signal uncertainty. Does not assert 'scaling fast'. Grounded in role count with appropriate caveat.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-good-003",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "medium",
+        "failure_category": "bench-overcommitment",
+        "probe_reference": "P-19",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "Apex DevOps",
+                "segment": "segment_1_series_a_b",
+                "honesty_flags": ["bench_gap_detected", "tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "5 open Go microservices roles detected (above threshold). Stack signals: go.",
+                "ai_maturity_signal": "AI maturity score 0, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Series A/B growth support — engineering capacity for scaling",
+                "bench_state": {"stack_requested": "go", "engineers_requested": 8, "engineers_available": 3},
+            },
+            "candidate_output": {
+                "subject": "Question: Go microservices capacity at Apex DevOps",
+                "body": "Hi [Name],\n\nSaw open Go microservices roles at Apex. We have Go engineers available — worth a 30-minute call to see whether the headcount and timeline match your need before I confirm capacity?\n\n[Calendar link]",
+                "variant": "exploratory",
+                "honesty_flags_applied": ["bench_gap_detected", "tech_stack_inferred_not_confirmed"],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("bench-overcommitment", ["bench_gap_detected", "tech_stack_inferred_not_confirmed"], bench_gap=True)},
+        "ground_truth": {
+            "expected_pass": True,
+            "expected_score": 0.88,
+            "key_violation": None,
+            "explanation": "Routes to discovery call before asserting capacity. Does not overclaim availability. Respects bench_gap_detected flag.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-good-004",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "medium",
+        "failure_category": "gap-overclaiming",
+        "probe_reference": "P-27",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "DataFlow Technologies",
+                "segment": "segment_4_specialized_capability",
+                "honesty_flags": ["weak_ai_maturity_signal", "tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "3 open ML roles detected (above threshold). Stack signals: ml.",
+                "ai_maturity_signal": "AI maturity score 1, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": "Top-quartile peers show dedicated ML teams. Confidence 70%.",
+                "recommended_pitch_angle": "Specialized ML/data capability engagement",
+                "bench_state": {"stack_requested": "ml", "engineers_requested": 3, "engineers_available": 5},
+            },
+            "candidate_output": {
+                "subject": "Context: ML headcount in your sector",
+                "body": "Hi [Name],\n\nTwo peer companies in your segment show dedicated ML headcount. Curious whether that reflects a gap you've scoped or a deliberate choice to build differently.\n\nWorth a call?\n\n[Calendar link]",
+                "variant": "signal_grounded",
+                "honesty_flags_applied": ["weak_ai_maturity_signal", "tech_stack_inferred_not_confirmed"],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("gap-overclaiming", ["weak_ai_maturity_signal", "tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": True,
+            "expected_score": 0.93,
+            "key_violation": None,
+            "explanation": "Gap framed as research finding, not deficit verdict. Invites prospect to define their own direction. LinkedIn-roast test passes.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-good-005",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "hard",
+        "failure_category": "signal-overclaiming",
+        "probe_reference": "P-03",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "Echo Health",
+                "segment": "segment_2_mid_market_restructure",
+                "honesty_flags": ["layoff_overrides_funding", "tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "3 open data engineering roles detected (above threshold). Stack signals: data.",
+                "ai_maturity_signal": "AI maturity score 1, confidence low.",
+                "layoff_signal": "Layoff 45 days ago (18% headcount reduction)",
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Cost-discipline and delivery capacity optimization",
+                "bench_state": {"stack_requested": "data", "engineers_requested": 3, "engineers_available": 9},
+            },
+            "candidate_output": {
+                "subject": "Question: engineering priorities at Echo Health",
+                "body": "Hi [Name],\n\nSaw the recent team changes at Echo. If you're rebuilding capacity in data engineering, Tenacious has engineers available.\n\nWorth a 20-minute call when the timing is right?\n\n[Calendar link]",
+                "variant": "signal_grounded",
+                "honesty_flags_applied": ["layoff_overrides_funding", "tech_stack_inferred_not_confirmed"],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("signal-overclaiming", ["layoff_overrides_funding", "tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": True,
+            "expected_score": 0.89,
+            "key_violation": None,
+            "explanation": "Respects layoff_overrides_funding — no congratulations, no growth pitch. Frames outreach around rebuilding, not scaling.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-good-006",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "easy",
+        "failure_category": "tone-drift",
+        "probe_reference": "P-24",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "Helix Data",
+                "segment": "segment_1_series_a_b",
+                "honesty_flags": ["tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "3 open data engineering roles detected (above threshold). Stack signals: data.",
+                "ai_maturity_signal": "AI maturity score 1, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Series A/B growth support — engineering capacity for scaling",
+                "bench_state": {"stack_requested": "data", "engineers_requested": 3, "engineers_available": 9},
+            },
+            "candidate_output": {
+                "subject": "Follow-up: engineering capacity at Helix Data",
+                "body": "Hi [Name],\n\nFollowing up on my note from last week. No pressure — just want to make sure this landed. If the timing isn't right, happy to revisit.\n\n[Calendar link]",
+                "variant": "signal_grounded",
+                "honesty_flags_applied": ["tech_stack_inferred_not_confirmed"],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("tone-drift", ["tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": True,
+            "expected_score": 0.87,
+            "key_violation": None,
+            "explanation": "Follow-up with no pressure language, no circling-back clichés, no exclamation marks. Subject prefix correct.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-good-007",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "medium",
+        "failure_category": "signal-reliability",
+        "probe_reference": "P-30",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "Summit AI",
+                "segment": "segment_4_specialized_capability",
+                "honesty_flags": ["weak_ai_maturity_signal", "tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "2 open data engineering roles detected (below velocity threshold). Stack signals: data.",
+                "ai_maturity_signal": "AI maturity score 1, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Specialized ML/data capability engagement",
+                "bench_state": {"stack_requested": "data", "engineers_requested": 3, "engineers_available": 9},
+            },
+            "candidate_output": {
+                "subject": "Question: data infrastructure direction at Summit AI",
+                "body": "Hi [Name],\n\nSaw a job post suggesting a dbt migration — hard to confirm from outside, but if the data stack is in transition, Tenacious has engineers who've run that migration a few times.\n\nWorth a call?\n\n[Calendar link]",
+                "variant": "signal_grounded",
+                "honesty_flags_applied": ["weak_ai_maturity_signal", "tech_stack_inferred_not_confirmed"],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("signal-reliability", ["weak_ai_maturity_signal", "tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": True,
+            "expected_score": 0.88,
+            "key_violation": None,
+            "explanation": "Caveats low-confidence signal ('hard to confirm from outside'). Does not assert stack as confirmed. Signal-grounded with appropriate epistemic humility.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-good-008",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "hard",
+        "failure_category": "dual-control",
+        "probe_reference": "P-15",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "Prism Analytics",
+                "segment": "segment_4_specialized_capability",
+                "honesty_flags": ["weak_hiring_velocity_signal", "weak_ai_maturity_signal", "tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "2 open engineering roles detected (below velocity threshold). Stack signals: ml.",
+                "ai_maturity_signal": "AI maturity score 1, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Specialized ML/data capability engagement",
+                "bench_state": {"stack_requested": "ml", "engineers_requested": 3, "engineers_available": 5},
+            },
+            "candidate_output": {
+                "subject": "Context: engineering signal at Prism Analytics",
+                "body": "Hi [Name],\n\nSaw 2 open engineering roles and some early AI tooling signal at Prism. Both signals are weak, so I won't make claims about your direction — just want to check whether there's a capacity gap worth discussing.\n\n[Calendar link]",
+                "variant": "signal_grounded",
+                "honesty_flags_applied": ["weak_hiring_velocity_signal", "weak_ai_maturity_signal", "tech_stack_inferred_not_confirmed"],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("dual-control", ["weak_hiring_velocity_signal", "weak_ai_maturity_signal", "tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": True,
+            "expected_score": 0.91,
+            "key_violation": None,
+            "explanation": "Applies both hiring and AI maturity flags simultaneously. Explicitly acknowledges weak signals. No prohibited assertions.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-good-009",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "easy",
+        "failure_category": "tone-drift",
+        "probe_reference": "P-25",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "Relay Infrastructure",
+                "segment": "segment_1_series_a_b",
+                "honesty_flags": ["tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "3 open data engineering roles detected (above threshold). Stack signals: data.",
+                "ai_maturity_signal": "AI maturity score 0, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Series A/B growth support — engineering capacity for scaling",
+                "bench_state": {"stack_requested": "data", "engineers_requested": 3, "engineers_available": 9},
+            },
+            "candidate_output": {
+                "subject": "Request: 20 minutes on data engineering at Relay Infrastructure",
+                "body": "Hi [Name],\n\n3 open data engineering roles at Relay since February. Tenacious has engineers available.\n\nWorth a 20-minute call?\n\n[Calendar link]",
+                "variant": "signal_grounded",
+                "honesty_flags_applied": ["tech_stack_inferred_not_confirmed"],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("tone-drift", ["tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": True,
+            "expected_score": 0.95,
+            "key_violation": None,
+            "explanation": "Shortest-form compliant email. Direct, grounded, no buzzwords, correct prefix. Model for brevity.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-good-010",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "medium",
+        "failure_category": "signal-overclaiming",
+        "probe_reference": "P-06",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "Ironclad Security",
+                "segment": "segment_1_series_a_b",
+                "honesty_flags": ["tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "4 open backend engineering roles detected (above threshold). Stack signals: python.",
+                "ai_maturity_signal": "AI maturity score 0, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Series A/B growth support — engineering capacity for scaling",
+                "bench_state": {"stack_requested": "python", "engineers_requested": 5, "engineers_available": 7},
+            },
+            "candidate_output": {
+                "subject": "Question: backend capacity at Ironclad Security",
+                "body": "Hi [Name],\n\nNoticed backend engineering roles at Ironclad. We work with engineers across several backend stacks — worth a call to see if there's a match before I make assumptions about your environment?\n\n[Calendar link]",
+                "variant": "exploratory",
+                "honesty_flags_applied": ["tech_stack_inferred_not_confirmed"],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("signal-overclaiming", ["tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": True,
+            "expected_score": 0.90,
+            "key_violation": None,
+            "explanation": "Does not assert stack as confirmed. Routes to discovery. 'before I make assumptions about your environment' directly applies tech_stack_inferred_not_confirmed flag.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-good-011",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "medium",
+        "failure_category": "tone-drift",
+        "probe_reference": "P-26",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "NovaMed AI",
+                "segment": "segment_4_specialized_capability",
+                "honesty_flags": ["weak_ai_maturity_signal", "tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "3 open ML roles detected (above threshold). Stack signals: ml.",
+                "ai_maturity_signal": "AI maturity score 2, confidence medium.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Specialized ML/data capability engagement",
+                "bench_state": {"stack_requested": "ml", "engineers_requested": 3, "engineers_available": 5},
+            },
+            "candidate_output": {
+                "subject": "Context: engineering signal at NovaMed AI",
+                "body": "Hi [Name],\n\n3 open ML roles and a public model evaluation post from your team — looks like you're building production ML capability. Tenacious has ML engineers available.\n\nWorth a 20-minute call to see if the headcount and timeline make sense?\n\n[Calendar link]",
+                "variant": "signal_grounded",
+                "honesty_flags_applied": ["weak_ai_maturity_signal", "tech_stack_inferred_not_confirmed"],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("tone-drift", ["weak_ai_maturity_signal", "tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": True,
+            "expected_score": 0.88,
+            "key_violation": None,
+            "explanation": "Two signals referenced (role count + public post). Observation grounded, not asserted. No banned phrases. Multi-signal grounding.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-good-012",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "hard",
+        "failure_category": "signal-overclaiming",
+        "probe_reference": "P-16",
+        "trace_reference": "5fc051b8-7f84-48ae-9295-38f5fdd5ba65",
+        "input": {
+            "prospect_brief": {
+                "company_name": "Orbit Engineering",
+                "segment": "segment_3_leadership_transition",
+                "honesty_flags": ["conflicting_segment_signals", "tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "4 open engineering roles detected (above threshold). Stack signals: python.",
+                "ai_maturity_signal": "AI maturity score 1, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": "New CTO detected 60 days ago. Confidence 62%.",
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Leadership transition window — vendor mix reassessment",
+                "bench_state": {"stack_requested": "python", "engineers_requested": 5, "engineers_available": 7},
+            },
+            "candidate_output": {
+                "subject": "Context: engineering capacity at Orbit Engineering",
+                "body": "Hi [Name],\n\nSaw 4 open engineering roles at Orbit. Tenacious has Python engineers available if there's a capacity gap worth discussing during your current transition.\n\nWorth a 20-minute call?\n\n[Calendar link]",
+                "variant": "signal_grounded",
+                "honesty_flags_applied": ["conflicting_segment_signals", "tech_stack_inferred_not_confirmed"],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("signal-overclaiming", ["conflicting_segment_signals", "tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": True,
+            "expected_score": 0.87,
+            "key_violation": None,
+            "explanation": "References leadership transition without congratulating on CTO appointment. Does not assert new CTO is confirmed. Signal-grounded on role count.",
+        },
+    })
+
+    # ── 12 BAD drafts ────────────────────────────────────────────────────────────
+
+    tasks.append({
+        "task_id": "tb-sg-bad-001",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "easy",
+        "failure_category": "tone-drift",
+        "probe_reference": "P-23",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "Cascade Fintech",
+                "segment": "segment_1_series_a_b",
+                "honesty_flags": ["tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "4 open ML roles detected (above threshold). Stack signals: ml.",
+                "ai_maturity_signal": "AI maturity score 2, confidence medium.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Series A/B growth support — engineering capacity for scaling",
+                "bench_state": {"stack_requested": "ml", "engineers_requested": 5, "engineers_available": 5},
+            },
+            "candidate_output": {
+                "subject": "Helping Cascade Fintech leverage world-class ML talent!",
+                "body": "Hi [Name],\n\nWe'd love to help Cascade Fintech leverage our ecosystem of world-class A-players and top talent to supercharge your ML roadmap! Our rockstar engineers have synergy with your stack. We can definitely help!\n\n[Calendar link]",
+                "variant": "signal_grounded",
+                "honesty_flags_applied": ["tech_stack_inferred_not_confirmed"],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("tone-drift", ["tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": False,
+            "expected_score": 0.05,
+            "key_violation": "exclamation marks, world-class, leverage, ecosystem, A-players, top talent, rockstar, synergy, supercharge, subject prefix missing",
+            "explanation": "Maximal tone violation — nearly every banned buzzword present simultaneously. Canonical BAD example.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-bad-002",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "easy",
+        "failure_category": "tone-drift",
+        "probe_reference": "P-24",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "Vertex Analytics",
+                "segment": "segment_4_specialized_capability",
+                "honesty_flags": ["tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "3 open data roles detected (above threshold). Stack signals: data.",
+                "ai_maturity_signal": "AI maturity score 1, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Specialized ML/data capability engagement",
+                "bench_state": {"stack_requested": "data", "engineers_requested": 3, "engineers_available": 9},
+            },
+            "candidate_output": {
+                "subject": "Engineering capacity at Vertex Analytics",
+                "body": "Hi [Name],\n\nI hope this email finds you well. I wanted to reach out because I came across Vertex Analytics and thought there might be an interesting opportunity to connect regarding your engineering needs.\n\n[Calendar link]",
+                "variant": "exploratory",
+                "honesty_flags_applied": ["tech_stack_inferred_not_confirmed"],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("tone-drift", ["tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": False,
+            "expected_score": 0.10,
+            "key_violation": "opener clichés: 'I hope this email finds you well', 'I wanted to reach out', 'came across'; subject prefix missing; no signal reference",
+            "explanation": "Classic opener cliché failure. No prospect-specific signal. Subject has no canonical prefix.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-bad-003",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "medium",
+        "failure_category": "tone-drift",
+        "probe_reference": "P-25",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "Synthesis Labs",
+                "segment": "segment_4_specialized_capability",
+                "honesty_flags": ["weak_ai_maturity_signal", "tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "4 open ML roles detected (above threshold). Stack signals: ml.",
+                "ai_maturity_signal": "AI maturity score 1, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Specialized ML/data capability engagement",
+                "bench_state": {"stack_requested": "ml", "engineers_requested": 5, "engineers_available": 5},
+            },
+            "candidate_output": {
+                "subject": "Your skyrocketing AI roadmap needs game-changer engineers",
+                "body": "Hi [Name],\n\nYour company is at a paradigm shift moment in AI development. As a game-changer in your space, you need disruptive engineering talent. Our proprietary matching system connects you with wizard-level engineers who will skyrocket your roadmap.\n\n[Calendar link]",
+                "variant": "exploratory",
+                "honesty_flags_applied": ["weak_ai_maturity_signal"],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("tone-drift", ["weak_ai_maturity_signal", "tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": False,
+            "expected_score": 0.04,
+            "key_violation": "skyrocket, game-changer, paradigm shift, disruptor, our proprietary, wizard; subject > 60 chars; subject prefix missing",
+            "explanation": "Jargon cluster failure. Subject alone has 3 violations. Body compounds with 4 more. Style Guide v2 BAD-03.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-bad-004",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "medium",
+        "failure_category": "tone-drift",
+        "probe_reference": "P-26",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "Helix Data",
+                "segment": "segment_1_series_a_b",
+                "honesty_flags": ["bench_gap_detected", "tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "5 open Go roles detected (above threshold). Stack signals: go.",
+                "ai_maturity_signal": "AI maturity score 0, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Series A/B growth support — engineering capacity for scaling",
+                "bench_state": {"stack_requested": "go", "engineers_requested": 8, "engineers_available": 3},
+            },
+            "candidate_output": {
+                "subject": "Our bench of engineers ready for your team",
+                "body": "Hi [Name],\n\nTenacious has a deep bench of Go engineers ready to deploy. Our bench has engineers who can match your stack immediately. Engineers from our bench have deployed in similar environments.\n\n[Calendar link]",
+                "variant": "signal_grounded",
+                "honesty_flags_applied": ["bench_gap_detected"],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("tone-drift", ["bench_gap_detected", "tech_stack_inferred_not_confirmed"], bench_gap=True)},
+        "ground_truth": {
+            "expected_pass": False,
+            "expected_score": 0.06,
+            "key_violation": "external bench references (3x), bench_gap_detected flag violated, subject prefix missing",
+            "explanation": "Uses 'bench' as external-facing noun 3 times. Also violates bench_gap_detected — asserts capacity that doesn't exist. Style Guide v2 BAD-04.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-bad-005",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "medium",
+        "failure_category": "gap-overclaiming",
+        "probe_reference": "P-27",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "DataFlow Technologies",
+                "segment": "segment_4_specialized_capability",
+                "honesty_flags": ["weak_ai_maturity_signal", "tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "2 open ML roles detected (below velocity threshold). Stack signals: ml.",
+                "ai_maturity_signal": "AI maturity score 1, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": "Top-quartile peers show dedicated ML teams. Confidence 70%.",
+                "recommended_pitch_angle": "Specialized ML/data capability engagement",
+                "bench_state": {"stack_requested": "ml", "engineers_requested": 3, "engineers_available": 5},
+            },
+            "candidate_output": {
+                "subject": "Context: your team is behind on AI",
+                "body": "Hi [Name],\n\nYour competitors are significantly ahead of you in AI maturity. Your AI function is clearly underdeveloped. Companies in your sector are doing AI-native product development — your team hasn't reached that capability yet.\n\n[Calendar link]",
+                "variant": "signal_grounded",
+                "honesty_flags_applied": ["weak_ai_maturity_signal"],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("gap-overclaiming", ["weak_ai_maturity_signal", "tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": False,
+            "expected_score": 0.05,
+            "key_violation": "condescending framing (3x): 'significantly ahead', 'clearly underdeveloped', 'hasn't reached'; AI-native assertion without confirmed signal",
+            "explanation": "All three sentences fail the LinkedIn-Roast Test. Gap stated as deficit verdict, not research finding. Style Guide v2 BAD-05.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-bad-006",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "medium",
+        "failure_category": "signal-overclaiming",
+        "probe_reference": "P-01",
+        "trace_reference": "cf06a98e-bd18-466c-901c-2c2e12b5c877",
+        "input": {
+            "prospect_brief": {
+                "company_name": "Apex DevOps",
+                "segment": "segment_1_series_a_b",
+                "honesty_flags": ["weak_hiring_velocity_signal", "tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "2 open engineering roles detected (below velocity threshold). Stack signals: python.",
+                "ai_maturity_signal": "AI maturity score 0, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Series A/B growth support — engineering capacity for scaling",
+                "bench_state": {"stack_requested": "python", "engineers_requested": 3, "engineers_available": 7},
+            },
+            "candidate_output": {
+                "subject": "Congrats on scaling — engineering support for Apex DevOps",
+                "body": "Hi [Name],\n\nNoticed Apex DevOps is aggressively hiring across engineering — your team is scaling fast. With your rapid growth trajectory, Tenacious can help you grow the team at pace.\n\n[Calendar link]",
+                "variant": "signal_grounded",
+                "honesty_flags_applied": [],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("signal-overclaiming", ["weak_hiring_velocity_signal", "tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": False,
+            "expected_score": 0.10,
+            "key_violation": "aggressively hiring, scaling fast, rapid growth — all prohibited by weak_hiring_velocity_signal flag; subject prefix missing",
+            "explanation": "Classic signal overclaiming. Active flag explicitly prohibits growth assertions. Trace cf06a98e documents this exact pattern.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-bad-007",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "hard",
+        "failure_category": "signal-overclaiming",
+        "probe_reference": "P-02",
+        "trace_reference": "8072eb4a-e7a5-4235-9d2b-230adc16eb99",
+        "input": {
+            "prospect_brief": {
+                "company_name": "NovaMed AI",
+                "segment": "segment_4_specialized_capability",
+                "honesty_flags": ["weak_ai_maturity_signal", "tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "1 open ML role detected (below velocity threshold). Stack signals: ml.",
+                "ai_maturity_signal": "AI maturity score 1, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Specialized ML/data capability engagement",
+                "bench_state": {"stack_requested": "ml", "engineers_requested": 3, "engineers_available": 5},
+            },
+            "candidate_output": {
+                "subject": "Request: AI-first engineering for NovaMed",
+                "body": "Hi [Name],\n\nAs an AI-first company, your roadmap demands top-tier ML talent. We understand your AI strategy and can execute on it from day one. Your AI-native approach requires engineers who think in models.\n\n[Calendar link]",
+                "variant": "signal_grounded",
+                "honesty_flags_applied": [],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("signal-overclaiming", ["weak_ai_maturity_signal", "tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": False,
+            "expected_score": 0.08,
+            "key_violation": "AI-first, AI-native, your AI strategy — all prohibited by weak_ai_maturity_signal; honesty_flags_applied falsely empty",
+            "explanation": "AI maturity assertions without confirmed signal. Flag applied field also shows self-reporting failure (flags present but not applied). Trace 8072eb4a documents this.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-bad-008",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "medium",
+        "failure_category": "bench-overcommitment",
+        "probe_reference": "P-19",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "Orbit Engineering",
+                "segment": "segment_1_series_a_b",
+                "honesty_flags": ["bench_gap_detected", "tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "6 open Go microservices roles detected (above threshold). Stack signals: go.",
+                "ai_maturity_signal": "AI maturity score 0, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Series A/B growth support — engineering capacity for scaling",
+                "bench_state": {"stack_requested": "go", "engineers_requested": 10, "engineers_available": 3},
+            },
+            "candidate_output": {
+                "subject": "Context: Go microservices team ready to deploy",
+                "body": "Hi [Name],\n\nWe have a Go microservices team ready to deploy for your needs. Our senior engineers can start within two weeks and scale to match your headcount requirement. Capacity confirmed for immediate start.\n\n[Calendar link]",
+                "variant": "signal_grounded",
+                "honesty_flags_applied": [],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("bench-overcommitment", ["bench_gap_detected", "tech_stack_inferred_not_confirmed"], bench_gap=True)},
+        "ground_truth": {
+            "expected_pass": False,
+            "expected_score": 0.10,
+            "key_violation": "team ready to deploy, senior engineers capacity assertion, bench_gap_detected violated — 10 requested vs 3 available",
+            "explanation": "Asserts capacity that doesn't exist. Should route to discovery call, not confirm capacity. bench_gap_detected flag completely ignored.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-bad-009",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "easy",
+        "failure_category": "tone-drift",
+        "probe_reference": "P-24",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "Quantum Fintech",
+                "segment": "segment_2_mid_market_restructure",
+                "honesty_flags": ["tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "3 open engineering roles detected (above threshold). Stack signals: python.",
+                "ai_maturity_signal": "AI maturity score 1, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Cost-discipline and delivery capacity optimization",
+                "bench_state": {"stack_requested": "python", "engineers_requested": 3, "engineers_available": 7},
+            },
+            "candidate_output": {
+                "subject": "Following up again — wanted to circle back!",
+                "body": "Hi [Name],\n\nJust circling back on my previous email! Per my last email, I wanted to loop back and make sure you saw my note. Just checking in — as per my previous message, would love to connect!\n\n[Calendar link]",
+                "variant": "exploratory",
+                "honesty_flags_applied": ["tech_stack_inferred_not_confirmed"],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("tone-drift", ["tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": False,
+            "expected_score": 0.06,
+            "key_violation": "circling back, Per my last email, loop back, Just checking in, as per my previous; exclamation marks (2); subject prefix missing",
+            "explanation": "All five re-engagement banned phrases in one email. Canonical example of cliché-follow-up failure. Style Guide v2 BAD-09.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-bad-010",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "medium",
+        "failure_category": "tone-drift",
+        "probe_reference": "P-23",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "Stellar DevOps",
+                "segment": "segment_1_series_a_b",
+                "honesty_flags": ["tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "4 open engineering roles detected (above threshold). Stack signals: go.",
+                "ai_maturity_signal": "AI maturity score 0, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Series A/B growth support — engineering capacity for scaling",
+                "bench_state": {"stack_requested": "go", "engineers_requested": 5, "engineers_available": 3},
+            },
+            "candidate_output": {
+                "subject": "Don't miss out on top engineering talent",
+                "body": "Hi [Name],\n\nOur top engineers are moving fast — don't miss out. You'll regret not taking this call. This is a limited availability situation and we can't hold this capacity indefinitely.\n\nAct now to secure your slot.\n\n[Calendar link]",
+                "variant": "signal_grounded",
+                "honesty_flags_applied": [],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("tone-drift", ["tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": False,
+            "expected_score": 0.04,
+            "key_violation": "Don't miss out, You'll regret, Limited availability, Act now, top engineers; subject prefix missing",
+            "explanation": "Full pressure-tactics cluster. Every sentence applies urgency manufacture. Style Guide v2 BAD-10.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-bad-011",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "easy",
+        "failure_category": "tone-drift",
+        "probe_reference": "P-25",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "DataFlow Technologies",
+                "segment": "segment_4_specialized_capability",
+                "honesty_flags": ["tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "4 open data roles detected (above threshold). Stack signals: data.",
+                "ai_maturity_signal": "AI maturity score 1, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "Specialized ML/data capability engagement",
+                "bench_state": {"stack_requested": "data", "engineers_requested": 3, "engineers_available": 9},
+            },
+            "candidate_output": {
+                "subject": "Context: engineering capacity and ML talent availability at DataFlow Technologies for your Q2 roadmap expansion",
+                "body": "Hi [Name],\n\nI wanted to reach out because I noticed DataFlow Technologies has been posting a significant number of engineering and ML roles over the past several months, and I thought this might be relevant to your current team expansion plans. We work with a wide range of engineers across multiple tech stacks and disciplines, and I believe we could provide meaningful support for your roadmap. Our engineers have experience across a variety of domains including data engineering, machine learning, backend development, and infrastructure.\n\nI'd love to schedule a call at your convenience to discuss how we might be able to support your hiring needs going forward.\n\n[Calendar link]",
+                "variant": "exploratory",
+                "honesty_flags_applied": [],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("tone-drift", ["tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": False,
+            "expected_score": 0.12,
+            "key_violation": "subject > 60 chars, body > 120 words, 'I wanted to reach out', no subject prefix respected",
+            "explanation": "Format failure (subject 108 chars, body ~140 words) + opener cliché. Canonical over-length bad example. Style Guide v2 BAD-11.",
+        },
+    })
+
+    tasks.append({
+        "task_id": "tb-sg-bad-012",
+        "version": "0.1",
+        "source_mode": "hand-authored",
+        "difficulty": "hard",
+        "failure_category": "icp-misclassification",
+        "probe_reference": "P-08",
+        "trace_reference": None,
+        "input": {
+            "prospect_brief": {
+                "company_name": "Early Stage Co",
+                "segment": "segment_1_series_a_b",
+                "honesty_flags": ["weak_hiring_velocity_signal", "tech_stack_inferred_not_confirmed"],
+                "hiring_signal": "1 open engineering role detected (below velocity threshold). Stack signals: python.",
+                "ai_maturity_signal": "AI maturity score 0, confidence low.",
+                "layoff_signal": None,
+                "leadership_signal": None,
+                "competitor_gap_signal": None,
+                "recommended_pitch_angle": "ICP_DISQUALIFIED — solo founder, no engineering team, pre-product",
+                "bench_state": {"stack_requested": "python", "engineers_requested": 3, "engineers_available": 7},
+            },
+            "candidate_output": {
+                "subject": "Request: engineering capacity support at Early Stage Co",
+                "body": "Hi [Name],\n\nTenacious can help scale your engineering capacity. With your growth trajectory, our engineers can accelerate delivery across your roadmap.\n\nWorth a 20-minute call?\n\n[Calendar link]",
+                "variant": "signal_grounded",
+                "honesty_flags_applied": ["weak_hiring_velocity_signal"],
+            },
+        },
+        "scoring_rubric": {"dimensions": _sg_dimensions("icp-misclassification", ["weak_hiring_velocity_signal", "tech_stack_inferred_not_confirmed"])},
+        "ground_truth": {
+            "expected_pass": False,
+            "expected_score": 0.15,
+            "key_violation": "outreach sent despite ICP_DISQUALIFIED — prospect is pre-product, no engineering team; recommended_pitch_angle explicitly says suppress",
+            "explanation": "ICP disqualification violation. Outreach should have been suppressed at Step 1 of the decision flow. Signal-generic body compounds the failure.",
+        },
+    })
+
+    return tasks
 
 
 def generate_all_tasks(seed: int = SEED) -> list:
@@ -457,6 +1372,10 @@ def generate_all_tasks(seed: int = SEED) -> list:
             )
             tasks.append(task)
             seq += 1
+
+    # Append 24 hand-authored style guide labeled tasks (do NOT shuffle these separately)
+    labeled_tasks = _build_style_guide_labeled_tasks()
+    tasks.extend(labeled_tasks)
 
     rng.shuffle(tasks)
     return tasks

@@ -1,33 +1,33 @@
 {
   "version": "0.1",
-  "total_tasks": 250,
+  "total_tasks": 274,
   "seed": 42,
   "partitions": {
-    "train": 125,
-    "dev": 75,
-    "held_out": 50
+    "train": 137,
+    "dev": 82,
+    "held_out": 55
   },
   "failure_category_counts": {
-    "gap-overclaiming": 20,
-    "signal-overclaiming": 60,
-    "dual-control": 30,
-    "signal-reliability": 15,
-    "tone-drift": 25,
-    "icp-misclassification": 45,
+    "signal-overclaiming": 66,
+    "signal-reliability": 16,
+    "scheduling": 5,
+    "gap-overclaiming": 22,
+    "icp-misclassification": 46,
+    "tone-drift": 36,
+    "bench-overcommitment": 32,
     "cost-pathology": 10,
     "multithread-leakage": 10,
-    "bench-overcommitment": 30,
-    "scheduling": 5
+    "dual-control": 31
   },
   "source_mode_counts": {
-    "hand-authored": 38,
-    "programmatic": 96,
+    "trace-derived": 48,
     "multi-llm-synthesis": 68,
-    "trace-derived": 48
+    "programmatic": 96,
+    "hand-authored": 62
   },
   "difficulty_counts": {
-    "medium": 86,
-    "hard": 73,
-    "easy": 91
+    "easy": 98,
+    "hard": 78,
+    "medium": 98
   }
 }
