@@ -23,6 +23,7 @@ try:
     import torch
     HAVE_UNSLOTH = True
 except ImportError:
+    Dataset = None  # type: ignore
     HAVE_UNSLOTH = False
     print("Unsloth/TRL not installed — training cannot run. Install via:")
     print("  pip install unsloth trl peft datasets accelerate")
@@ -123,4 +124,7 @@ def train():
 
 
 if __name__ == "__main__":
+    if not HAVE_UNSLOTH:
+        print("Run this script on Google Colab T4 after installing dependencies.")
+        raise SystemExit(1)
     train()
