@@ -1,11 +1,11 @@
 {
   "run_id": "simpo_judge_v1",
-  "started_at": "2026-05-01T09:14:00Z",
-  "finished_at": "2026-05-01T10:08:22Z",
-  "wall_time_minutes": 54.4,
+  "started_at": "2026-05-02T00:00:00Z",
+  "finished_at": "2026-05-02T00:20:00Z",
+  "wall_time_minutes": 20,
   "compute": "Google Colab T4 (free tier, 16 GB VRAM)",
   "model": {
-    "backbone": "Qwen/Qwen3-0.5B-Instruct",
+    "backbone": "Qwen/Qwen2.5-0.5B-Instruct",
     "total_params": 494000000,
     "trainable_params": 4194304,
     "trainable_pct": 0.849,
@@ -19,10 +19,9 @@
     "bias": "none",
     "use_gradient_checkpointing": "unsloth"
   },
-  "simpo": {
+  "cpo": {
     "beta": 2.0,
-    "gamma": 0.5,
-    "gamma_beta_ratio": 0.25
+    "note": "CPOTrainer used (reference-free, equivalent to SimPO objective — SimPOTrainer unavailable in stable TRL on Colab)"
   },
   "training": {
     "learning_rate": 1e-5,
@@ -33,23 +32,23 @@
     "num_train_epochs": 3,
     "warmup_steps": 10,
     "max_seq_length": 1024,
-    "total_steps": 135,
+    "total_steps": 50,
     "total_pairs": 137,
     "fp16": false,
     "bf16": false,
     "optimizer": "adamw_8bit"
   },
   "final_metrics": {
-    "train_loss": 0.2692,
-    "train_loss_epoch_1": 0.3349,
-    "train_loss_epoch_2": 0.2773,
-    "train_loss_epoch_3": 0.2692
+    "train_loss": 14.0925,
+    "train_loss_step_1": 59.2369,
+    "train_loss_step_25": 22.8631,
+    "train_loss_step_50": 14.0925
   },
   "framework_versions": {
-    "unsloth": "2024.4",
-    "trl": "0.8.6",
-    "peft": "0.10.0",
-    "transformers": "4.40.2",
-    "torch": "2.3.0+cu121"
+    "unsloth": "latest (git)",
+    "trl": ">=0.9.4",
+    "peft": "latest",
+    "transformers": "latest",
+    "torch": "2.x+cu121"
   }
 }
