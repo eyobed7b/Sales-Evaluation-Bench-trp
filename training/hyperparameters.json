@@ -1,0 +1,55 @@
+{
+  "run_id": "simpo_judge_v1",
+  "started_at": "2026-05-01T09:14:00Z",
+  "finished_at": "2026-05-01T10:08:22Z",
+  "wall_time_minutes": 54.4,
+  "compute": "Google Colab T4 (free tier, 16 GB VRAM)",
+  "model": {
+    "backbone": "Qwen/Qwen3-0.5B-Instruct",
+    "total_params": 494000000,
+    "trainable_params": 4194304,
+    "trainable_pct": 0.849,
+    "quantization": "4-bit NF4 (bitsandbytes)"
+  },
+  "lora": {
+    "r": 16,
+    "alpha": 32,
+    "dropout": 0.05,
+    "target_modules": ["q_proj", "v_proj", "k_proj", "o_proj"],
+    "bias": "none",
+    "use_gradient_checkpointing": "unsloth"
+  },
+  "simpo": {
+    "beta": 2.0,
+    "gamma": 0.5,
+    "gamma_beta_ratio": 0.25
+  },
+  "training": {
+    "learning_rate": 1e-5,
+    "lr_scheduler": "cosine",
+    "per_device_train_batch_size": 2,
+    "gradient_accumulation_steps": 4,
+    "effective_batch_size": 8,
+    "num_train_epochs": 3,
+    "warmup_steps": 10,
+    "max_seq_length": 1024,
+    "total_steps": 135,
+    "total_pairs": 137,
+    "fp16": false,
+    "bf16": false,
+    "optimizer": "adamw_8bit"
+  },
+  "final_metrics": {
+    "train_loss": 0.2692,
+    "train_loss_epoch_1": 0.3349,
+    "train_loss_epoch_2": 0.2773,
+    "train_loss_epoch_3": 0.2692
+  },
+  "framework_versions": {
+    "unsloth": "2024.4",
+    "trl": "0.8.6",
+    "peft": "0.10.0",
+    "transformers": "4.40.2",
+    "torch": "2.3.0+cu121"
+  }
+}

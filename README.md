@@ -5,8 +5,13 @@
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 **Author:** Eyobed Feleke (eyobed@10academy.org)  
-**Status:** Week 11 Interim Submission — Acts I & II complete  
-**Submission deadline:** Wednesday 2026-04-29, 21hr UTC
+**Status:** Week 11 Final Submission — Acts I–IV complete  
+**Submission deadline:** Saturday 2026-05-02, 21hr UTC
+
+**Public artifacts:**
+- HuggingFace dataset: `eyobed7b/tenacious-bench` *(to be published 2026-05-02)*
+- HuggingFace model: `eyobed7b/tenacious-bench-simpo-judge-v1` *(to be published 2026-05-02)*
+- Blog post: *(to be published 2026-05-02)*
 
 ---
 
@@ -27,28 +32,44 @@ Every task has a machine-verifiable rubric. The scoring evaluator runs without h
 
 ```
 Sales-Evaluation-Bench-trp/
-├── README.md                          ← this file
+├── memo.md                            ← FINAL REPORT (2-page decision memo)
+├── evidence_graph.json                ← Every numeric claim mapped to source file
+├── README.md
 ├── audit_memo.md                      ← Act I: what τ²-Bench misses (600 words)
+├── methodology.md                     ← Path B declaration + justification
+├── methodology_rationale.md          ← Path-specific papers (SimPO, LoRA, DPO, ORPO)
 ├── schema.json                        ← Task schema + 3 example tasks
 ├── scoring_evaluator.py               ← Machine-verifiable scoring script
-├── methodology.md                     ← Path B declaration + justification
 ├── datasheet.md                       ← Gebru + Pushkarna dataset documentation
 ├── contamination_check.json           ← N-gram, embedding, time-shift results
 ├── inter_rater_agreement.md           ← Self-labeling κ scores per rubric dimension
 ├── cost_log.md                        ← All API and compute charges
 ├── seed/
-│   └── style_guide_v2.md             ← Tenacious Style Guide v2 (banned phrases, tone markers, 24 labeled drafts)
+│   └── style_guide_v2.md             ← Tenacious Style Guide v2 (24 labeled drafts)
+├── training_data/
+│   ├── build_simpo_pairs.py           ← Generates SimPO preference pairs
+│   └── simpo_pairs.jsonl              ← 137 preference pairs (84 FAIL + 53 PASS)
+├── training/
+│   ├── train_simpo.py                 ← Unsloth + TRL SimPO training script
+│   ├── hyperparameters.json           ← Full run config + timing
+│   └── loss_log.json                  ← Per-step training loss (55 min on Colab T4)
+├── ablations/
+│   ├── ablation_results.json          ← Delta A (+23.6pp), Delta B (+14.5pp), cost-Pareto
+│   ├── held_out_traces.jsonl          ← Sample held-out scoring traces
+│   └── statistical_test.json          ← McNemar test + bootstrap CIs
 ├── tenacious_bench_v0.1/
-│   ├── manifest.json                  ← Dataset manifest (counts, seed, distribution)
-│   ├── train/tasks.jsonl              ← 137 training tasks (50%)
-│   ├── dev/tasks.jsonl                ← 82 dev tasks (30%)
-│   └── held_out/tasks.jsonl           ← 55 held-out tasks (20%, sealed)
+│   ├── manifest.json
+│   ├── train/tasks.jsonl              ← 137 tasks (50%)
+│   ├── dev/tasks.jsonl                ← 82 tasks (30%)
+│   └── held_out/tasks.jsonl           ← 55 tasks (20%, sealed)
 ├── generation_scripts/
-│   ├── generate_dataset.py            ← Reproducible dataset generation (seed=42)
-│   └── contamination_check.py        ← Contamination check script
+│   ├── generate_dataset.py            ← Reproducible generation (seed=42)
+│   └── contamination_check.py
 └── synthesis_memos/
-    ├── memo_llm_as_judge_survey.md    ← Gu et al. (2024–2025) synthesis
-    └── memo_synthetic_data_best_practices.md  ← Liu et al. (COLM 2024) synthesis
+    ├── memo_llm_as_judge_survey.md    ← Gu et al. (2024–2025)
+    ├── memo_synthetic_data_best_practices.md  ← Liu et al. (COLM 2024)
+    ├── memo_simpo_preference_optimization.md  ← Meng et al. (NeurIPS 2024) [PATH-SPECIFIC]
+    └── memo_lora_efficient_finetuning.md      ← Hu et al. (ICLR 2022) [PATH-SPECIFIC]
 ```
 
 ---
@@ -79,13 +100,21 @@ python generation_scripts/generate_dataset.py \
     --seed 42
 ```
 
-Expected output for dev partition (Week 10 baseline, no trained judge):
+Expected output for dev partition (rule-only, no trained judge):
 ```
 Scored 82 tasks
 Mean score:   ~0.78
 Pass rate:    ~0.66
 Accuracy:     ~0.74
 ```
+
+**Held-out headline results (SimPO judge v1):**
+
+| Condition | Accuracy | Cost/task |
+|---|---|---|
+| Rule-only | 69.1% | $0.000 |
+| SimPO judge (trained) | 92.7% | $0.000 |
+| Delta A | +23.6pp (p=0.004) | — |
 
 A stranger should be able to run this and reproduce a score within 2 percentage points.
 

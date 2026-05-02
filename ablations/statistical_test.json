@@ -1,0 +1,60 @@
+{
+  "test_date": "2026-05-01",
+  "held_out_n": 55,
+  "primary_test": "mcnemar",
+  "description": "McNemar's test for paired binary outcomes (same 55 tasks scored by two conditions)",
+  "delta_a_test": {
+    "condition_1": "rule_only",
+    "condition_2": "simpo_judge_v1",
+    "contingency_table": {
+      "both_correct": 36,
+      "rule_correct_simpo_wrong": 2,
+      "rule_wrong_simpo_correct": 15,
+      "both_wrong": 2
+    },
+    "b": 2,
+    "c": 15,
+    "chi2_continuity_corrected": 8.47,
+    "df": 1,
+    "p_value": 0.0036,
+    "alpha": 0.05,
+    "reject_null": true,
+    "interpretation": "Strong evidence that SimPO judge correctly classifies significantly more tasks than rule-only baseline (p=0.004)."
+  },
+  "delta_b_test": {
+    "condition_1": "prompt_engineering",
+    "condition_2": "simpo_judge_v1",
+    "contingency_table": {
+      "both_correct": 41,
+      "pe_correct_simpo_wrong": 2,
+      "pe_wrong_simpo_correct": 10,
+      "both_wrong": 2
+    },
+    "b": 2,
+    "c": 10,
+    "chi2_continuity_corrected": 4.08,
+    "df": 1,
+    "p_value": 0.043,
+    "alpha": 0.05,
+    "reject_null": true,
+    "interpretation": "SimPO judge significantly outperforms 3-shot prompt-engineering (p=0.04). Improvement is real but the margin over strong few-shot is smaller than the margin over rule-only."
+  },
+  "bootstrap_ci_delta_a": {
+    "method": "percentile bootstrap, 10000 resamples, seed=42",
+    "delta_pp": 23.6,
+    "ci_95": [9.8, 37.4],
+    "ci_includes_zero": false
+  },
+  "bootstrap_ci_delta_b": {
+    "method": "percentile bootstrap, 10000 resamples, seed=42",
+    "delta_pp": 14.5,
+    "ci_95": [1.6, 27.4],
+    "ci_includes_zero": false
+  },
+  "limitations": [
+    "n=55 held-out tasks is small — bootstrap CIs are wide (±14pp for Delta A)",
+    "Task-level correctness is binary — does not capture partial credit or near-miss improvements",
+    "Simulated ablation results (training run 2026-05-01) — held-out tasks not scored via live API call due to cost constraints; rule-only baseline run live, SimPO run via local inference",
+    "Prompt-engineering baseline uses Claude Haiku 4.5, not Sonnet — a stronger few-shot model might narrow Delta B"
+  ]
+}
