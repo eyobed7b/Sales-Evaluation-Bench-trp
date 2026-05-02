@@ -11,6 +11,7 @@
 **Public artifacts:**
 - HuggingFace dataset: [`eyobed7b/tenacious-bench`](https://huggingface.co/datasets/eyobed7b/tenacious-bench)
 - HuggingFace model: [`eyobed7b/tenacious-bench-simpo-judge-v1`](https://huggingface.co/eyobed7b/tenacious-bench-simpo-judge-v1)
+- Blog post: [LinkedIn — Tenacious-Bench v0.1](https://www.linkedin.com/feed/update/urn:li:activity:7456391267724349440/)
 
 ---
 
