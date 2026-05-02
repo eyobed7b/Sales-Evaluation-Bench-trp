@@ -9,9 +9,8 @@
 **Submission deadline:** Saturday 2026-05-02, 21hr UTC
 
 **Public artifacts:**
-- HuggingFace dataset: `eyobed7b/tenacious-bench` *(to be published 2026-05-02)*
-- HuggingFace model: `eyobed7b/tenacious-bench-simpo-judge-v1` *(to be published 2026-05-02)*
-- Blog post: *(to be published 2026-05-02)*
+- HuggingFace dataset: [`eyobed7b/tenacious-bench`](https://huggingface.co/datasets/eyobed7b/tenacious-bench)
+- HuggingFace model: [`eyobed7b/tenacious-bench-simpo-judge-v1`](https://huggingface.co/eyobed7b/tenacious-bench-simpo-judge-v1)
 
 ---
 
