@@ -3,15 +3,18 @@
 **Sales Agent Evaluation Benchmark for B2B Outbound Honesty and Tone Compliance**
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![Dataset](https://img.shields.io/badge/HuggingFace-Dataset-yellow)](https://huggingface.co/datasets/eyobed7b/tenacious-bench)
+[![Model](https://img.shields.io/badge/HuggingFace-Model-blue)](https://huggingface.co/eyobed7b/tenacious-bench-simpo-judge-v1)
 
 **Author:** Eyobed Feleke (eyobed@10academy.org)  
-**Status:** Week 11 Final Submission — Acts I–IV complete  
-**Submission deadline:** Saturday 2026-05-02, 21hr UTC
+**Status:** Week 11 Final Submission — complete
 
 **Public artifacts:**
-- HuggingFace dataset: [`eyobed7b/tenacious-bench`](https://huggingface.co/datasets/eyobed7b/tenacious-bench)
-- HuggingFace model: [`eyobed7b/tenacious-bench-simpo-judge-v1`](https://huggingface.co/eyobed7b/tenacious-bench-simpo-judge-v1)
+- Dataset: [`eyobed7b/tenacious-bench`](https://huggingface.co/datasets/eyobed7b/tenacious-bench)
+- Model: [`eyobed7b/tenacious-bench-simpo-judge-v1`](https://huggingface.co/eyobed7b/tenacious-bench-simpo-judge-v1)
 - Blog post: [LinkedIn — Tenacious-Bench v0.1](https://www.linkedin.com/feed/update/urn:li:activity:7456391267724349440/)
+- Community: [GitHub Issues — feedback welcome](https://github.com/eyobed7b/Sales-Evaluation-Bench-trp/issues/1)
+- Final report: [`memo.pdf`](memo.pdf)
 
 ---
 
@@ -28,49 +31,17 @@ Every task has a machine-verifiable rubric. The scoring evaluator runs without h
 
 ---
 
-## Repository Structure
+## Headline Results
 
-```
-Sales-Evaluation-Bench-trp/
-├── memo.md                            ← FINAL REPORT (2-page decision memo)
-├── evidence_graph.json                ← Every numeric claim mapped to source file
-├── README.md
-├── audit_memo.md                      ← Act I: what τ²-Bench misses (600 words)
-├── methodology.md                     ← Path B declaration + justification
-├── methodology_rationale.md          ← Path-specific papers (SimPO, LoRA, DPO, ORPO)
-├── schema.json                        ← Task schema + 3 example tasks
-├── scoring_evaluator.py               ← Machine-verifiable scoring script
-├── datasheet.md                       ← Gebru + Pushkarna dataset documentation
-├── contamination_check.json           ← N-gram, embedding, time-shift results
-├── inter_rater_agreement.md           ← Self-labeling κ scores per rubric dimension
-├── cost_log.md                        ← All API and compute charges
-├── seed/
-│   └── style_guide_v2.md             ← Tenacious Style Guide v2 (24 labeled drafts)
-├── training_data/
-│   ├── build_simpo_pairs.py           ← Generates SimPO preference pairs
-│   └── simpo_pairs.jsonl              ← 137 preference pairs (84 FAIL + 53 PASS)
-├── training/
-│   ├── train_simpo.py                 ← Unsloth + TRL SimPO training script
-│   ├── hyperparameters.json           ← Full run config + timing
-│   └── loss_log.json                  ← Per-step training loss (55 min on Colab T4)
-├── ablations/
-│   ├── ablation_results.json          ← Delta A (+23.6pp), Delta B (+14.5pp), cost-Pareto
-│   ├── held_out_traces.jsonl          ← Sample held-out scoring traces
-│   └── statistical_test.json          ← McNemar test + bootstrap CIs
-├── tenacious_bench_v0.1/
-│   ├── manifest.json
-│   ├── train/tasks.jsonl              ← 137 tasks (50%)
-│   ├── dev/tasks.jsonl                ← 82 tasks (30%)
-│   └── held_out/tasks.jsonl           ← 55 tasks (20%, sealed)
-├── generation_scripts/
-│   ├── generate_dataset.py            ← Reproducible generation (seed=42)
-│   └── contamination_check.py
-└── synthesis_memos/
-    ├── memo_llm_as_judge_survey.md    ← Gu et al. (2024–2025)
-    ├── memo_synthetic_data_best_practices.md  ← Liu et al. (COLM 2024)
-    ├── memo_simpo_preference_optimization.md  ← Meng et al. (NeurIPS 2024) [PATH-SPECIFIC]
-    └── memo_lora_efficient_finetuning.md      ← Hu et al. (ICLR 2022) [PATH-SPECIFIC]
-```
+| Condition | Held-out Accuracy | Cost/task |
+|---|---|---|
+| Rule-only baseline | 69.1% (38/55) | $0.000 |
+| Prompt-eng (3-shot Haiku) | 78.2% (43/55) | $0.001 |
+| **CPO judge v1 (trained)** | **92.7% (51/55)** | **$0.000** |
+| Claude Sonnet (est.) | ~96.0% | $0.003 |
+
+**Delta A = +23.6 pp** over rule-only (95% CI: [+9.8, +37.4], McNemar p=0.004)  
+**Delta B = +14.5 pp** over prompt-engineering (95% CI: [+1.6, +27.4], McNemar p=0.043)
 
 ---
 
@@ -78,9 +49,9 @@ Sales-Evaluation-Bench-trp/
 
 ```bash
 # 1. Clone and install
-git clone <repo-url>
+git clone https://github.com/eyobed7b/Sales-Evaluation-Bench-trp.git
 cd Sales-Evaluation-Bench-trp
-pip install -r requirements.txt   # transformers, peft, trl, datasets, accelerate
+pip install -r requirements.txt
 
 # 2. Score the dev partition (no LLM judge — regex + length checks only)
 python scoring_evaluator.py \
@@ -100,21 +71,13 @@ python generation_scripts/generate_dataset.py \
     --seed 42
 ```
 
-Expected output for dev partition (rule-only, no trained judge):
+Expected output for dev partition (rule-only):
 ```
 Scored 82 tasks
 Mean score:   ~0.78
 Pass rate:    ~0.66
 Accuracy:     ~0.74
 ```
-
-**Held-out headline results (SimPO judge v1):**
-
-| Condition | Accuracy | Cost/task |
-|---|---|---|
-| Rule-only | 69.1% | $0.000 |
-| SimPO judge (trained) | 92.7% | $0.000 |
-| Delta A | +23.6pp (p=0.004) | — |
 
 A stranger should be able to run this and reproduce a score within 2 percentage points.
 
@@ -145,24 +108,68 @@ A stranger should be able to run this and reproduce a score within 2 percentage 
 
 ---
 
-## Training Path
+## Training
 
-**Path B — SimPO preference-tuned judge/critic**
+**CPO preference-tuned judge — Qwen2.5-0.5B-Instruct + LoRA**
 
-The judge is trained to detect honesty flag violations post-generation and serve as a rejection-sampling layer. Backbone: Qwen 3.5 0.8B with LoRA. Training: Unsloth on Google Colab T4 (free).
+The judge is trained to detect honesty flag violations post-generation and serve as a rejection-sampling layer. Training uses CPO (Contrastive Preference Optimization) — reference-free, no frozen reference model required — on 137 preference pairs via Unsloth on Google Colab T4 (free tier).
 
-Evidence for Path B over Path A/C: see `methodology.md` and `probes/target_failure_mode.md` in the Week 10 repo.
-
-Training runs and ablation results will be committed to `training/` and `ablations/` by the final submission (Saturday 2026-05-02).
+| Config | Value |
+|---|---|
+| Backbone | Qwen/Qwen2.5-0.5B-Instruct |
+| LoRA r / alpha | 16 / 32 |
+| Target modules | q_proj, v_proj, k_proj, o_proj |
+| CPO β | 2.0 |
+| Epochs | 3 |
+| Training pairs | 137 |
+| Final loss | 14.09 |
+| Compute | Colab T4 free tier |
 
 ---
 
-## What Is Next (Days 4–7)
+## Repository Structure
 
-- [ ] Day 4: Format training partition as SimPO preference pairs; path-specific papers read
-- [ ] Day 5: Core training run (Qwen 3.5 0.8B + LoRA via Unsloth, ~60 min on Colab T4)
-- [ ] Day 6: Ablations (Delta A vs. baseline, Delta B vs. prompt-engineering, Cost-Pareto)
-- [ ] Day 7: Publish dataset to HuggingFace; publish LoRA adapter; write blog post; community engagement
+```
+Sales-Evaluation-Bench-trp/
+├── memo.pdf                           ← FINAL REPORT (2-page decision memo)
+├── memo.md                            ← Source for memo.pdf
+├── evidence_graph.json                ← Every numeric claim mapped to source file
+├── audit_memo.md                      ← Act I: what τ²-Bench misses
+├── methodology.md                     ← Path B declaration + justification
+├── methodology_rationale.md           ← Path-specific papers (CPO, LoRA, SimPO, DPO)
+├── schema.json                        ← Task schema + 3 example tasks
+├── scoring_evaluator.py               ← Machine-verifiable scoring script
+├── datasheet.md                       ← Gebru + Pushkarna dataset documentation
+├── contamination_check.json           ← N-gram, embedding, time-shift results
+├── inter_rater_agreement.md           ← Self-labeling κ scores per rubric dimension
+├── cost_log.md                        ← All API and compute charges
+├── seed/
+│   └── style_guide_v2.md             ← Tenacious Style Guide v2 (24 labeled drafts)
+├── training_data/
+│   ├── build_simpo_pairs.py           ← Generates preference pairs
+│   └── simpo_pairs.jsonl              ← 137 preference pairs (84 FAIL + 53 PASS)
+├── training/
+│   ├── train_simpo.py                 ← Unsloth + TRL CPO training script
+│   ├── hyperparameters.json           ← Full run config + timing
+│   └── loss_log.json                  ← Per-step training loss (Colab T4)
+├── ablations/
+│   ├── ablation_results.json          ← Delta A (+23.6pp), Delta B (+14.5pp), cost-Pareto
+│   ├── held_out_traces.jsonl          ← Sample held-out scoring traces
+│   └── statistical_test.json          ← McNemar test + bootstrap CIs
+├── tenacious_bench_v0.1/
+│   ├── manifest.json
+│   ├── train/tasks.jsonl              ← 137 tasks (50%)
+│   ├── dev/tasks.jsonl                ← 82 tasks (30%)
+│   └── held_out/tasks.jsonl           ← 55 tasks (20%, sealed)
+├── generation_scripts/
+│   ├── generate_dataset.py            ← Reproducible generation (seed=42)
+│   └── contamination_check.py
+└── synthesis_memos/
+    ├── memo_llm_as_judge_survey.md    ← Gu et al. (2024–2025)
+    ├── memo_synthetic_data_best_practices.md  ← Liu et al. (COLM 2024)
+    ├── memo_simpo_preference_optimization.md  ← Meng et al. (NeurIPS 2024)
+    └── memo_lora_efficient_finetuning.md      ← Hu et al. (ICLR 2022)
+```
 
 ---
 
@@ -174,10 +181,12 @@ Training runs and ablation results will be committed to `training/` and `ablatio
 | Machine-verifiable scoring | `scoring_evaluator.py` |
 | Dataset quality | `datasheet.md`, `inter_rater_agreement.md` |
 | Contamination prevention | `contamination_check.json`, `generation_scripts/contamination_check.py` |
-| Methodology rationale | `methodology.md` |
+| Methodology rationale | `methodology.md`, `methodology_rationale.md` |
 | Multi-LLM synthesis routing | `generation_scripts/generate_dataset.py`, `synthesis_memos/` |
 | Tone compliance spec | `seed/style_guide_v2.md` |
+| Training artifacts | `training/`, `ablations/` |
 | Cost discipline | `cost_log.md` |
+| Final decision memo | `memo.pdf` |
 
 ---
 
