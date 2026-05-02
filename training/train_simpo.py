@@ -33,7 +33,7 @@ except ImportError:
 
 # ── Config ───────────────────────────────────────────────────────────────────
 
-MODEL_NAME   = "Qwen/Qwen3-0.5B-Instruct"
+MODEL_NAME   = "Qwen/Qwen2.5-0.5B-Instruct"
 OUTPUT_DIR   = "training/runs/simpo_judge_v1"
 DATA_PATH    = "training_data/simpo_pairs.jsonl"
 LOG_PATH     = "training/loss_log.json"
