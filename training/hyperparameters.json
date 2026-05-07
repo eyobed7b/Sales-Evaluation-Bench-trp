@@ -21,7 +21,15 @@
   },
   "cpo": {
     "beta": 2.0,
-    "note": "CPOTrainer used (reference-free, equivalent to SimPO objective — SimPOTrainer unavailable in stable TRL on Colab)"
+    "beta_rationale": "β is the preference-pressure scalar (global reward-scale knob). At 2.0, the gradient correction on preference reversals is moderate but the base model's generosity prior is not fully overridden on disqualification tasks (18% false-negative rate observed). Diagnostic sweep recommended before changing: [1.0, 1.5, 2.0].",
+    "loss_type": "cpo",
+    "loss_type_note": "Plain CPO — no length normalization, no target margin. Named train_simpo.py but SimPO config not applied. To enable SimPO margin: set loss_type=simpo and gamma_beta_ratio=0.4 after running output-length diagnostic.",
+    "simpo_next_run": {
+      "loss_type": "simpo",
+      "beta": 1.0,
+      "gamma_beta_ratio": 0.4,
+      "prerequisite": "Equalize PASS/FAIL output lengths in build_simpo_pairs.py first — PASS verdicts avg 11 tokens, FAIL avg 54 tokens (4.9x asymmetry causes structural PASS bias under length normalization)"
+    }
   },
   "training": {
     "learning_rate": 1e-5,

@@ -63,7 +63,19 @@ The hiring signals, AI maturity scores, and leadership signals in all tasks are 
 
 ### One Honest Unresolved Training Failure
 
-The SimPO judge has a **PASS bias on ICP misclassification tasks at the scoring evaluator level (no LLM)**. Tasks where the prospect is disqualified but the email looks compliant (no banned phrases, correct format, generic but not lying) score 1.0 on three of four rubric dimensions before the LLM judge is applied. The trained judge learns the surface compliance signal correctly but cannot reliably detect the policy-level suppression decision (this prospect should receive no email at all) from the email text alone. In the ablations, ICP misclassification accuracy is 96% — but this largely reflects the four dimensions scoring correctly on the structural email properties, not on the suppression decision. A task where the suppression should have happened is structurally indistinguishable from a legitimate outreach to a passing prospect. This failure mode is unresolved and requires a separate ICP classifier gate upstream of the email judge.
+The CPO judge has a **PASS bias on ICP misclassification tasks** (18% false-negative rate on disqualification-category held-out tasks). The root cause has two components:
+
+**Structural cause — output length asymmetry under the CPO loss.** PASS verdicts in the training pairs average ~11 tokens; FAIL verdicts with reasoning average ~54 tokens. The CPO loss uses raw summed log-probability as the reward. Longer sequences accumulate more negative log-probability regardless of quality, creating a length confound that works against the FAIL > PASS preference signal on short PASS outputs. This is separate from β and would persist even with a lower β value.
+
+**Training cause — β=2.0 may over-regularize on sparse disqualification pairs.** β is the preference-pressure scalar: higher β pulls the trained policy back toward the base model's priors more strongly after each update. With only 84 fail-case training pairs (including ~10 disqualification tasks), the base model's generosity prior competes against the FAIL > PASS signal and may not be fully overridden. This is a β/data-size interaction, not a pure β problem.
+
+**Diagnostic plan before retraining (cheapest first):**
+1. Run `scoring_evaluator.py --batch tenacious_bench_v0.1/held_out/` — new `false_pass_rate_on_expected_fail` and `category_recall_on_expected_fail` fields now report the bias per category.
+2. Raise PASS threshold from 0.70 to 0.75 in `score_task()` and re-score. If false-negative rate on disqualification drops below 10%, threshold calibration is sufficient — no retraining needed.
+3. If threshold is insufficient: equalize PASS/FAIL output lengths in `build_simpo_pairs.py`, then retrain with `loss_type="simpo"` and `gamma_beta_ratio=0.4` in `train_simpo.py`.
+4. Only lower β (try 1.0) if Step 3 does not close the gap — β is a global knob and risks degrading calibration on non-disqualification categories.
+
+This failure mode requires a separate ICP classifier gate upstream of the email judge as a structural fix independent of retraining.
 
 ### Kill-Switch Trigger Condition
 

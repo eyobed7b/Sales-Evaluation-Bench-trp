@@ -41,6 +41,30 @@ MAX_SEQ_LEN  = 1024
 LORA_R       = 16
 LORA_ALPHA   = 32
 LORA_DROPOUT = 0.05
+# CPO_BETA is the preference-pressure scalar in the CPO loss:
+#   L = -log σ( β · (log p(chosen) - log p(rejected)) )
+# It is a global reward-scale knob — it affects ALL preference pairs, not only
+# disqualification pairs. Higher β = stronger gradient correction when the model
+# reverses preference, but also stronger pull back toward the base model's priors.
+# At β=2.0, over-regularization is a plausible cause of lingering PASS bias on
+# disqualification tasks: the base model's generosity prior competes against the
+# FAIL > PASS signal and may not be fully overridden with 137 pairs.
+#
+# Next-run diagnostic sweep (do not change without running the diagnostic plan):
+#   beta:             [1.0, 1.5, 2.0]
+#   gamma_beta_ratio: [0.3, 0.4, 0.5]   # requires loss_type="simpo" below
+#   pass_threshold:   [0.70, 0.75, 0.80] # sweep in scoring_evaluator.py first
+#
+# To enable SimPO margin (adds target reward margin γ = gamma_beta_ratio × β):
+#   config = CPOConfig(
+#       beta=1.0,
+#       loss_type="simpo",      # enables length-normalized reward + margin
+#       gamma_beta_ratio=0.4,   # chosen must beat rejected by at least γ/β
+#       ...
+#   )
+# WARNING: SimPO uses length-normalized reward. PASS verdicts (~11 tokens) are
+# shorter than FAIL verdicts (~54 tokens). Run output-length diagnostic in
+# training_data/build_simpo_pairs.py before enabling length normalization.
 CPO_BETA     = 2.0
 LR           = 1e-5
 BATCH_SIZE   = 2

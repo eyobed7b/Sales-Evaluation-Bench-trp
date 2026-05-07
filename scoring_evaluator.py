@@ -296,12 +296,38 @@ def summary_stats(results: list) -> dict:
 
     category_means = {k: round(sum(v) / len(v), 4) for k, v in by_category.items()}
 
+    # False PASS rate on expected_fail tasks — primary diagnostic for PASS bias.
+    # A high false_pass_rate on disqualification categories indicates β is too low
+    # or the SimPO target margin is missing. Run this before any retraining.
+    expected_fail = [r for r in valid if r.get("expected_pass") is False]
+    false_pass_rate = None
+    if expected_fail:
+        false_passes = sum(1 for r in expected_fail if r.get("passed") is True)
+        false_pass_rate = round(false_passes / len(expected_fail), 4)
+
+    # Per-category recall on expected_fail tasks — identifies which categories
+    # drive PASS bias. Compare icp-misclassification recall against other categories.
+    category_recall = {}
+    by_cat_fail = {}
+    for r in valid:
+        if r.get("expected_pass") is False:
+            cat = r.get("failure_category", "unknown")
+            by_cat_fail.setdefault(cat, {"total": 0, "correct_fail": 0})
+            by_cat_fail[cat]["total"] += 1
+            if r.get("correct_classification") is True:
+                by_cat_fail[cat]["correct_fail"] += 1
+    for cat, counts in by_cat_fail.items():
+        if counts["total"] > 0:
+            category_recall[cat] = round(counts["correct_fail"] / counts["total"], 4)
+
     return {
         "n_tasks": len(valid),
         "mean_score": round(sum(scores) / len(scores), 4),
         "pass_rate": round(pass_rate, 4),
         "classification_accuracy": round(accuracy, 4),
         "category_mean_scores": category_means,
+        "false_pass_rate_on_expected_fail": false_pass_rate,
+        "category_recall_on_expected_fail": category_recall,
     }
 
 
